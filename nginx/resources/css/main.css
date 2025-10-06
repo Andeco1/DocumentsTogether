@@ -1,0 +1,222 @@
+/* --- Общие стили --- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: #f5f7fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* --- Хедер --- */
+header {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 16px;
+    transition: color 0.3s, transform 0.2s;
+}
+
+nav a:hover {
+    color: #ffdd57;
+    transform: scale(1.05);
+}
+
+/* --- Контент --- */
+.content {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.content h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #222;
+}
+
+/* --- Блоки информации --- */
+.info-block {
+    background: white;
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.info-block:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+.info-block h3 {
+    margin-top: 0;
+    color: #357abd;
+    font-size: 22px;
+}
+
+.info-block p,
+.info-block ul {
+    margin: 10px 0 0;
+    font-size: 16px;
+}
+
+.info-block ul {
+    padding-left: 20px;
+}
+
+.info-block li {
+    margin-bottom: 8px;
+    list-style: "✔ ";
+    color: #444;
+}
+
+/* --- Кнопка CTA --- */
+.cta-button {
+    display: inline-block;
+    margin: 25px auto 0;
+    padding: 14px 32px;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* --- Футер --- */
+footer {
+    background: #2c3e50;
+    color: #bbb;
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+    nav {
+        margin-top: 10px;
+    }
+    nav a {
+        margin: 0 10px;
+    }
+    .content h1 {
+        font-size: 26px;
+    }
+    .cta-button {
+        width: 80%;
+        font-size: 16px;
+    }
+}
+
+/* --- Секция Hero --- */
+.hero {
+    background: linear-gradient(135deg, #4a90e2, #357abd);
+    color: white;
+    padding: 80px 40px; /* сверху/снизу 80px, слева/справа 40px */
+    padding-left: 60px; /* дополнительный отступ слева */
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    max-width: 600px;
+}
+
+/* --- Кнопка CTA --- */
+.cta-button {
+    display: inline-block;
+    padding: 14px 32px;
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* --- Секция Features --- */
+.features {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 40px 80px 60px; /* верх/право/низ/лево */
+    gap: 20px;
+}
+
+.feature {
+    background: white;
+    padding: 25px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    flex: 1;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.feature:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+.feature h3 {
+    color: #357abd;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+
+.feature p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* --- Адаптивность --- */
+@media (max-width: 768px) {
+    .features {
+        flex-direction: column;
+        padding-left: 20px; /* уменьшенный отступ слева на мобильных */
+    }
+}
