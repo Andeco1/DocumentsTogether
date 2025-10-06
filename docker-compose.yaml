@@ -1,0 +1,46 @@
+name: "DocuShare"
+services:
+  database:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: "documentsDB"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "adminPassword"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - documents-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  migration:
+    image: liquibase/liquibase:latest
+    depends_on:
+      - database
+    volumes:
+      - ./migrations:/liquibase/changelog
+    command: >
+      --url=jdbc:postgresql://database:5432/documentsDB
+      --changeLogFile=changelog/changelog-master.xml
+      --username=admin
+      --password=adminPassword
+      update
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: dockerfile
+    env_file: .env
+    ports:
+      - 8080:8080
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - server
+
+
+volumes:
+  documents-data:
