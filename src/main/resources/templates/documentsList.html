@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Мои документы — DocuShare</title>
+    <link rel="stylesheet" href="@{/css/documents.css}">
+</head>
+<body>
+<header>
+    <h2>DocuShare</h2>
+    <nav>
+        <a href="/profile">Профиль</a>
+    </nav>
+</header>
+
+<main>
+    <section class="documents-section">
+        <h1>Мои документы</h1>
+        <button class="create-button" onclick="location.href='/documents'">Создать файл</button>
+
+        <ul class="documents-list">
+            <li th:each="doc : ${documents}" class="document-item">
+                <span class="document-name" th:text="${doc.name}">Название документа</span>
+                <div class="document-actions">
+                    <button class="edit-button"
+                            th:onclick="'location.href=\'/documents/edit/' + ${doc.id} + '\'"/>
+                    Изменить
+                    </button>
+                    <form th:action="@{/documents/delete/{id}(id=${doc.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="delete-button">Удалить</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </section>
+</main>
+
+</body>
+</html>
