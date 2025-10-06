@@ -5,10 +5,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/main")
+@RequestMapping("/docs")
 public class BaseController {
-    @GetMapping
-    public String showMainPage(){
-        return "mainPage";
+    @GetMapping("/login")
+    public String showLogin(){
+        return "login";
+    }
+    @GetMapping("/register")
+    public String showRegister(){
+        return "register";
     }
 }
