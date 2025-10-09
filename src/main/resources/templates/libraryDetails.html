@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${doc.title} ?: ${doc.file_name}">Документ</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/documents.css}">
+</head>
+<body>
+<header>
+    <a href="/library">← Ко всем материалам</a>
+    <h2 th:text="${doc.title} ?: ${doc.file_name}">Название</h2>
+</header>
+
+<main>
+    <p><strong>Автор:</strong> <span th:text="${doc.author}">Автор</span></p>
+    <p th:text="${doc.description}">Описание</p>
+    <p class="muted" th:text="${#dates.format(doc.createdAt, 'dd.MM.yyyy HH:mm')}">Дата</p>
+    <div>
+        <a th:if="${doc.file_url}" th:href="${doc.file_url}" target="_blank">Скачать файл</a>
+    </div>
+</main>
+
+</body>
+</html>
+
+

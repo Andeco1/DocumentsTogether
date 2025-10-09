@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Онлайн библиотека</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/documents.css}">
+    <style>
+        .library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:16px}
+        .card{border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#fff}
+        .card h3{margin:0 0 8px 0;font-size:16px}
+        .muted{color:#6b7280;font-size:12px}
+        .search{display:flex;gap:8px}
+        .search input{flex:1;padding:8px}
+        .actions{margin-top:8px}
+    </style>
+    </head>
+<body>
+<header>
+    <h2>Онлайн библиотека</h2>
+    <nav>
+        <a href="/docs/login">Вход</a>
+        <a href="/docs/register">Регистрация</a>
+    </nav>
+ </header>
+
+<main>
+    <form class="search" method="get" action="/library">
+        <input type="text" name="q" placeholder="Поиск по названию или автору" th:value="${q}">
+        <button type="submit">Искать</button>
+    </form>
+
+    <section class="library-grid">
+        <article class="card" th:each="d : ${documents}">
+            <h3 th:text="${d.title} ?: ${d.file_name}">Название</h3>
+            <div class="muted" th:text="${d.author}">Автор</div>
+            <p class="muted" th:text="${#strings.abbreviate(d.description, 140)}">Описание</p>
+            <div class="actions">
+                <a th:href="@{'/library/' + ${d.documentId}}">Подробнее</a>
+                <span> · </span>
+                <a th:if="${d.file_url}" th:href="${d.file_url}" target="_blank">Скачать</a>
+            </div>
+        </article>
+    </section>
+</main>
+
+</body>
+</html>
+
+

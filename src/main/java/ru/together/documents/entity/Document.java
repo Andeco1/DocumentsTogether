@@ -25,6 +25,18 @@ public class Document {
     @Column(unique = false, nullable = true)
     private String file_url;
 
+    @Column(nullable = true, length = 255)
+    private String title;
+
+    @Column(nullable = true, length = 255)
+    private String author;
+
+    @Column(nullable = true, length = 2048)
+    private String description;
+
+    @Column(nullable = false)
+    private boolean isPublic = true;
+
     @Column(unique = false, nullable = false)
     private Instant createdAt;
 }

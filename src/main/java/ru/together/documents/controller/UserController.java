@@ -42,7 +42,7 @@ public class UserController {
     ){
         boolean success = userService.login(username,password);
         if(success){
-            return "redirect:/docs/list?username=" + username;
+            return "redirect:/library";
         } else {
             redirectAttributes.addAttribute("error", true);
             return "redirect:/docs/login";
