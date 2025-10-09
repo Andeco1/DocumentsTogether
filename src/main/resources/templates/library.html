@@ -6,43 +6,224 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" th:href="@{/css/documents.css}">
     <style>
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        .sidebar {
+            width: 300px;
+            background: #f8f9fa;
+            border-left: 1px solid #e5e7eb;
+            padding: 20px;
+        }
         .library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:16px}
         .card{border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#fff}
         .card h3{margin:0 0 8px 0;font-size:16px}
         .muted{color:#6b7280;font-size:12px}
-        .search{display:flex;gap:8px}
+        .search{display:flex;gap:8px;margin-bottom:20px}
         .search input{flex:1;padding:8px}
         .actions{margin-top:8px}
+        .user-info {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .add-document-btn {
+            width: 100%;
+            padding: 12px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .add-document-btn:hover {
+            background: #2563eb;
+        }
+        .add-document-panel {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .add-document-panel.show {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
     </style>
-    </head>
+</head>
 <body>
 <header>
     <h2>Онлайн библиотека</h2>
-    <nav>
-        <a href="/docs/login">Вход</a>
-        <a href="/docs/register">Регистрация</a>
-    </nav>
- </header>
+</header>
 
-<main>
-    <form class="search" method="get" action="/library">
-        <input type="text" name="q" placeholder="Поиск по названию или автору" th:value="${q}">
-        <button type="submit">Искать</button>
-    </form>
+<div class="layout">
+    <main class="main-content">
+        <form class="search" method="get" action="/library">
+            <input type="text" name="q" placeholder="Поиск по названию или автору" th:value="${q}">
+            <button type="submit">Искать</button>
+        </form>
 
-    <section class="library-grid">
-        <article class="card" th:each="d : ${documents}">
-            <h3 th:text="${d.title} ?: ${d.file_name}">Название</h3>
-            <div class="muted" th:text="${d.author}">Автор</div>
-            <p class="muted" th:text="${#strings.abbreviate(d.description, 140)}">Описание</p>
-            <div class="actions">
-                <a th:href="@{'/library/' + ${d.documentId}}">Подробнее</a>
-                <span> · </span>
-                <a th:if="${d.file_url}" th:href="${d.file_url}" target="_blank">Скачать</a>
-            </div>
-        </article>
-    </section>
-</main>
+        <section class="library-grid">
+            <article class="card" th:each="d : ${documents}">
+                <h3 th:text="${d.title} ?: ${d.file_name}">Название</h3>
+                <div class="muted" th:text="${d.author}">Автор</div>
+                <p class="muted" th:text="${#strings.abbreviate(d.description, 140)}">Описание</p>
+                <div class="actions">
+                    <a th:href="@{'/library/' + ${d.documentId}}">Подробнее</a>
+                    <span> · </span>
+                    <a th:if="${d.file_url}" th:href="${d.file_url}" target="_blank">Скачать</a>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <aside class="sidebar">
+        <div class="user-info">
+            <h3>Пользователь</h3>
+            <p class="muted">Добро пожаловать в библиотеку</p>
+        </div>
+
+        <button class="add-document-btn" onclick="toggleAddDocumentPanel()">
+            + Добавить документ
+        </button>
+
+        <div class="add-document-panel" id="addDocumentPanel">
+            <h4>Добавить новый документ</h4>
+            <form id="addDocumentForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Название:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="author">Автор:</label>
+                    <input type="text" id="author" name="author">
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание:</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="file">Файл:</label>
+                    <input type="file" id="file" name="file" required>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isPublic" name="isPublic" checked>
+                        Сделать публичным
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                    <button type="button" class="btn btn-secondary" onclick="toggleAddDocumentPanel()">Отмена</button>
+                </div>
+            </form>
+            <div id="uploadMessage" style="margin-top: 10px; display: none;"></div>
+        </div>
+    </aside>
+</div>
+
+<script>
+function toggleAddDocumentPanel() {
+    const panel = document.getElementById('addDocumentPanel');
+    panel.classList.toggle('show');
+}
+
+function showMessage(message, isSuccess) {
+    const messageDiv = document.getElementById('uploadMessage');
+    messageDiv.textContent = message;
+    messageDiv.style.display = 'block';
+    messageDiv.style.color = isSuccess ? '#10b981' : '#ef4444';
+    messageDiv.style.padding = '8px';
+    messageDiv.style.borderRadius = '4px';
+    messageDiv.style.backgroundColor = isSuccess ? '#d1fae5' : '#fee2e2';
+    
+    setTimeout(() => {
+        messageDiv.style.display = 'none';
+    }, 5000);
+}
+
+document.getElementById('addDocumentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const messageDiv = document.getElementById('uploadMessage');
+    messageDiv.style.display = 'none';
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Загрузка...';
+    submitBtn.disabled = true;
+    
+    fetch('/library/upload', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showMessage('Документ успешно загружен!', true);
+            this.reset();
+            toggleAddDocumentPanel();
+            // Reload the page to show the new document
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        } else {
+            showMessage('Ошибка: ' + data.message, false);
+        }
+    })
+    .catch(error => {
+        showMessage('Ошибка загрузки: ' + error.message, false);
+    })
+    .finally(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    });
+});
+</script>
 
 </body>
 </html>
