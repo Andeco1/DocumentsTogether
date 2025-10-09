@@ -1,6 +1,7 @@
 name: "DocuShare"
 services:
   database:
+    container_name: database
     image: postgres:15
     environment:
       POSTGRES_DB: "documentsDB"
@@ -12,6 +13,7 @@ services:
     ports:
       - "5432:5432"
   migration:
+    container_name: migration
     image: liquibase/liquibase:latest
     depends_on:
       - database
@@ -28,10 +30,17 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-    env_file: .env
+    environment:
+      URL: jdbc:postgresql://database:5432/documentsDB
+      USERNAME: admin
+      PASSWORD: adminPassword
     ports:
       - 8080:8080
+    depends_on:
+      migration:
+        condition: service_completed_successfully
   nginx:
+    container_name: nginx
     build:
       context: ./nginx
       dockerfile: dockerfile
