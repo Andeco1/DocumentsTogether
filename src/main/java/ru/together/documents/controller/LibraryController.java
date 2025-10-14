@@ -2,13 +2,15 @@ package ru.together.documents.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.together.documents.dto.DocumentUploadRequest;
 import ru.together.documents.entity.Document;
-import ru.together.documents.entity.User;
+import ru.together.documents.entity.LibUser;
 import ru.together.documents.repository.UserRepository;
 import ru.together.documents.service.DocumentService;
 
@@ -52,26 +54,22 @@ public class LibraryController {
             @RequestParam("author") String author,
             @RequestParam("description") String description,
             @RequestParam("isPublic") boolean isPublic,
-            @RequestParam("file") MultipartFile file,
-            @RequestParam(value = "username", required = false) String username) {
+            @RequestParam("file") MultipartFile file) {
         
         Map<String, Object> response = new HashMap<>();
         
         try {
-            // For now, create a default user or get from session
-            // TODO: Implement proper authentication/session management
-            User user;
-            if (username != null && !username.isEmpty()) {
-                user = userRepository.findByUsername(username)
-                        .orElseThrow(() -> new RuntimeException("User not found"));
-            } else {
-                // Create a default user for testing
-                user = new User();
-                user.setUserId(1L);
-                user.setUsername("default");
-                user.setEmail("default@example.com");
-                user.setPassword("default");
+            // Get authenticated libUser
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication == null || !authentication.isAuthenticated()) {
+                response.put("success", false);
+                response.put("message", "Authentication required");
+                return ResponseEntity.status(401).body(response);
             }
+            
+            String username = authentication.getName();
+            LibUser libUser = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("LibUser not found"));
 
             DocumentUploadRequest request = new DocumentUploadRequest();
             request.setTitle(title);
@@ -79,7 +77,7 @@ public class LibraryController {
             request.setDescription(description);
             request.setPublic(isPublic);
 
-            Document document = documentService.createDocument(request, file, user);
+            Document document = documentService.createDocument(request, file, libUser);
             
             response.put("success", true);
             response.put("message", "Document uploaded successfully");

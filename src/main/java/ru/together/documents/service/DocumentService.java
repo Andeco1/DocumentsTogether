@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.together.documents.dto.DocumentUploadRequest;
 import ru.together.documents.entity.Document;
-import ru.together.documents.entity.User;
+import ru.together.documents.entity.LibUser;
 import ru.together.documents.repository.DocumentRepository;
 
 import java.io.IOException;
@@ -19,8 +19,8 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final S3Service s3Service;
 
-    public List<Document> getDocumentsByUser(User user) {
-        return documentRepository.findByUser(user);
+    public List<Document> getDocumentsByLibUser(LibUser libUser) {
+        return documentRepository.findByLibUser(libUser);
     }
 
     public List<Document> listPublicDocuments() {
@@ -40,7 +40,7 @@ public class DocumentService {
                 .filter(Document::isPublic);
     }
 
-    public Document createDocument(DocumentUploadRequest request, MultipartFile file, User user) throws IOException {
+    public Document createDocument(DocumentUploadRequest request, MultipartFile file, LibUser libUser) throws IOException {
         if (file.isEmpty()) {
             throw new IllegalArgumentException("File cannot be empty");
         }
@@ -53,7 +53,7 @@ public class DocumentService {
 
         // Create document entity
         Document document = new Document();
-        document.setUser(user);
+        document.setLibUser(libUser);
         document.setFile_name(file.getOriginalFilename());
         document.setFile_url(fileUrl);
         document.setTitle(request.getTitle());

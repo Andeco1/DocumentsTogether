@@ -1,6 +1,7 @@
 package ru.together.documents.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import ru.together.documents.service.UserService;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public String register(
@@ -42,6 +44,7 @@ public class UserController {
     ){
         boolean success = userService.login(username,password);
         if(success){
+            redirectAttributes.addAttribute("username",username);
             return "redirect:/library";
         } else {
             redirectAttributes.addAttribute("error", true);

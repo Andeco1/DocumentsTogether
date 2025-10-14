@@ -17,7 +17,7 @@ public class Document {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private LibUser libUser;
 
     @Column(unique = false, nullable = false)
     private String file_name;
