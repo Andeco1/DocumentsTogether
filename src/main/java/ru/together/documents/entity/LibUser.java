@@ -21,4 +21,10 @@ public class LibUser {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String theme = "light"; // light, dark, colorblind
+
+    @Column(nullable = false)
+    private String language = "ru"; // ru, en, es, etc.
 }

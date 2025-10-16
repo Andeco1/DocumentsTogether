@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:class="${themeClass}">
 <head>
     <meta charset="UTF-8">
     <title>Онлайн библиотека</title>
@@ -91,11 +91,70 @@
             background: #6b7280;
             color: white;
         }
+        
+        /* Theme styles */
+        .theme-dark {
+            background-color: #1a1a1a;
+            color: #e5e5e5;
+        }
+        .theme-dark .card {
+            background: #2d2d2d;
+            border-color: #404040;
+            color: #e5e5e5;
+        }
+        .theme-dark .sidebar {
+            background: #2d2d2d;
+            border-color: #404040;
+        }
+        .theme-dark .libUser-info {
+            background: #2d2d2d;
+            color: #e5e5e5;
+        }
+        .theme-dark .add-document-panel {
+            background: #2d2d2d;
+            color: #e5e5e5;
+        }
+        .theme-dark input, .theme-dark textarea {
+            background: #404040;
+            border-color: #555;
+            color: #e5e5e5;
+        }
+        
+        .theme-colorblind {
+            background-color: #f8f9fa;
+            color: #000;
+        }
+        .theme-colorblind .card {
+            background: #fff;
+            border: 2px solid #000;
+        }
+        .theme-colorblind .btn-primary {
+            background: #000;
+            border: 2px solid #000;
+        }
+        .theme-colorblind .btn-secondary {
+            background: #fff;
+            color: #000;
+            border: 2px solid #000;
+        }
+        
+        .preferences-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .theme-dark .preferences-panel {
+            background: #2d2d2d;
+            color: #e5e5e5;
+        }
     </style>
 </head>
 <body>
 <header>
     <h2>Онлайн библиотека</h2>
+    <p th:text="${userGreeting}" class="greeting">Добро пожаловать в библиотеку!</p>
 </header>
 
 <div class="layout">
@@ -125,6 +184,30 @@
             <div id="userActions">
                 <button onclick="logout()" class="btn btn-secondary" style="width: 100%;">Выйти</button>
             </div>
+        </div>
+
+        <div class="preferences-panel" id="preferencesPanel">
+            <h4>Настройки</h4>
+            <form id="preferencesForm">
+                <div class="form-group">
+                    <label for="themeSelect">Тема:</label>
+                    <select id="themeSelect" name="theme">
+                        <option value="light">Светлая</option>
+                        <option value="dark">Темная</option>
+                        <option value="colorblind">Для людей с цветовой слепотой</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="languageSelect">Язык:</label>
+                    <select id="languageSelect" name="language">
+                        <option value="ru">Русский</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
         </div>
 
         <button class="add-document-btn" id="addDocumentBtn" onclick="toggleAddDocumentPanel()">
@@ -221,6 +304,57 @@ document.getElementById('addDocumentForm').addEventListener('submit', function(e
     .finally(() => {
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
+    });
+});
+
+// Preferences functionality
+document.addEventListener('DOMContentLoaded', function() {
+    loadUserPreferences();
+});
+
+function loadUserPreferences() {
+    fetch('/api/preferences')
+    .then(response => response.json())
+    .then(data => {
+        if (data.theme) {
+            document.getElementById('themeSelect').value = data.theme;
+        }
+        if (data.language) {
+            document.getElementById('languageSelect').value = data.language;
+        }
+    })
+    .catch(error => {
+        console.error('Error loading preferences:', error);
+    });
+}
+
+document.getElementById('preferencesForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const theme = formData.get('theme');
+    const language = formData.get('language');
+    
+    fetch('/api/preferences', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `theme=${theme}&language=${language}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showMessage('Настройки сохранены! Перезагружаем страницу...', true);
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        } else {
+            showMessage('Ошибка: ' + data.error, false);
+        }
+    })
+    .catch(error => {
+        showMessage('Ошибка сохранения настроек: ' + error.message, false);
     });
 });
 </script>

@@ -66,4 +66,29 @@ public class DocumentService {
         return documentRepository.save(document);
     }
 
+    public Document updateDocumentMeta(Long id, String author, String description) {
+        Document document = documentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Document not found"));
+
+        if (author != null && !author.isBlank()) {
+            document.setAuthor(author);
+        }
+        if (description != null && !description.isBlank()) {
+            document.setDescription(description);
+        }
+
+        return documentRepository.save(document);
+    }
+
+    public void deleteDocument(Long id) {
+        Document document = documentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Document not found"));
+
+        // Удаляем файл из S3, если есть ссылка
+        if (document.getFile_url() != null) {
+            s3Service.deleteFile(document.getFile_url());
+        }
+
+        documentRepository.delete(document);
+    }
 }

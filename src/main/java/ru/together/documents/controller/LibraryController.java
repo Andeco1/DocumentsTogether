@@ -13,6 +13,7 @@ import ru.together.documents.entity.Document;
 import ru.together.documents.entity.LibUser;
 import ru.together.documents.repository.UserRepository;
 import ru.together.documents.service.DocumentService;
+import ru.together.documents.service.PersonalizationService;
 import ru.together.documents.service.JwtService;
 
 import java.io.IOException;
@@ -26,12 +27,13 @@ public class LibraryController {
 
     private final DocumentService documentService;
     private final UserRepository userRepository;
+    private final PersonalizationService personalizationService;
     private final JwtService jwtService;
 
     @GetMapping({"", "/"})
     public String list(
             @RequestParam(value = "q", required = false) String q, Model model,
-            @CookieValue(name = "access_token") String token
+            @CookieValue(name = "access_token", required = false) String token
     ) {
         if (q == null || q.isBlank()){
             model.addAttribute("documents", documentService.listPublicDocuments());
@@ -39,7 +41,23 @@ public class LibraryController {
             model.addAttribute("documents", documentService.searchPublicDocuments(q));
         }
         model.addAttribute("q", q);
-        model.addAttribute("username", jwtService.extractUsername(token));
+        
+        // Add personalization data
+        if (token != null && !token.isEmpty()) {
+            try {
+                String username = jwtService.extractUsername(token);
+                model.addAttribute("username", username);
+                model.addAttribute("userGreeting", personalizationService.getPersonalizedGreeting(username));
+                model.addAttribute("themeClass", personalizationService.getPersonalizedThemeClass(username));
+            } catch (Exception e) {
+                model.addAttribute("userGreeting", "Добро пожаловать в библиотеку!");
+                model.addAttribute("themeClass", "theme-light");
+            }
+        } else {
+            model.addAttribute("userGreeting", "Добро пожаловать в библиотеку!");
+            model.addAttribute("themeClass", "theme-light");
+        }
+        
         return "library";
     }
 

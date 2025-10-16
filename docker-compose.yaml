@@ -12,6 +12,13 @@ services:
       - documents-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+  redis:
+    container_name: redis
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
   migration:
     container_name: migration
     image: liquibase/liquibase:latest
@@ -34,6 +41,9 @@ services:
       URL: jdbc:postgresql://database:5432/documentsDB
       USERNAME: admin
       PASSWORD: adminPassword
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ""
       YANDEX_S3_ACCESS_KEY: ${YANDEX_S3_ACCESS_KEY}
       YANDEX_S3_SECRET_KEY: ${YANDEX_S3_SECRET_KEY}
       YANDEX_S3_BUCKET_NAME: ${YANDEX_S3_BUCKET_NAME}
@@ -43,6 +53,8 @@ services:
     depends_on:
       migration:
         condition: service_completed_successfully
+      redis:
+        condition: service_started
   nginx:
     container_name: nginx
     build:
@@ -57,3 +69,4 @@ services:
 
 volumes:
   documents-data:
+  redis-data:

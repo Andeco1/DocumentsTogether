@@ -25,7 +25,7 @@ public class UserController {
             @RequestParam String confirmPassword,
             RedirectAttributes redirectAttributes
     ) {
-        boolean success = userService.register(username, email, password, confirmPassword);
+        boolean success = userService.register(username, email, password, confirmPassword) != null;
 
         if (success) {
             redirectAttributes.addAttribute("success", true);
