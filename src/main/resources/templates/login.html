@@ -8,20 +8,57 @@
 <body>
 <div class="form-container">
     <h2>Вход</h2>
-    <form th:action="@{/docs/login}" method="post">
-        <input type="text" name="username" placeholder="Имя пользователя" required>
-        <input type="password" name="password" placeholder="Пароль" required>
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Имя пользователя" required>
+        <input type="password" id="password" placeholder="Пароль" required>
         <button type="submit" class="btn-login">Войти</button>
     </form>
-    <div th:if="${param.error}" class="error-message">
+    <div id="errorMessage" class="error-message" style="display: none;">
         Неверное имя пользователя или пароль
     </div>
-    <div th:if="${param.logout}" class="success-message">
-        Вы успешно вышли
+    <div id="successMessage" class="success-message" style="display: none;">
+        Вы успешно вошли
     </div>
     <div class="form-footer">
-        Нет аккаунта? <a th:href="@{/docs/register}">Зарегистрироваться</a>
+        Нет аккаунта? <a href="/docs/register">Зарегистрироваться</a>
     </div>
 </div>
+
+<script>
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+        e.preventDefault(); // предотвращаем стандартную отправку формы
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        try {
+            const response = await fetch("/docs/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ username, password }),
+                credentials: "include" // очень важно для cookie
+            });
+
+            if (response.ok) {
+                document.getElementById("successMessage").style.display = "block";
+                document.getElementById("errorMessage").style.display = "none";
+
+                setTimeout(() => {
+                    window.location.href = "/library"; // редирект
+                }, 1000);
+            } else {
+                document.getElementById("errorMessage").style.display = "block";
+                document.getElementById("successMessage").style.display = "none";
+            }
+        } catch (err) {
+            document.getElementById("errorMessage").style.display = "block";
+            document.getElementById("successMessage").style.display = "none";
+        }
+    });
+</script>
+
+
 </body>
 </html>

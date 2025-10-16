@@ -27,7 +27,7 @@
         .search{display:flex;gap:8px;margin-bottom:20px}
         .search input{flex:1;padding:8px}
         .actions{margin-top:8px}
-        .user-info {
+        .libUser-info {
             background: white;
             border-radius: 8px;
             padding: 16px;
@@ -120,12 +120,14 @@
     </main>
 
     <aside class="sidebar">
-        <div class="user-info">
-            <h3>Пользователь</h3>
-            <p class="muted">Добро пожаловать в библиотеку</p>
+        <div class="libUser-info">
+            <h3 id="userInfo" th:text="${username}"></h3>
+            <div id="userActions">
+                <button onclick="logout()" class="btn btn-secondary" style="width: 100%;">Выйти</button>
+            </div>
         </div>
 
-        <button class="add-document-btn" onclick="toggleAddDocumentPanel()">
+        <button class="add-document-btn" id="addDocumentBtn" onclick="toggleAddDocumentPanel()">
             + Добавить документ
         </button>
 
@@ -163,14 +165,12 @@
         </div>
     </aside>
 </div>
-
 <script>
 function toggleAddDocumentPanel() {
     const panel = document.getElementById('addDocumentPanel');
     panel.classList.toggle('show');
 }
-
-function showMessage(message, isSuccess) {
+    function showMessage(message, isSuccess) {
     const messageDiv = document.getElementById('uploadMessage');
     messageDiv.textContent = message;
     messageDiv.style.display = 'block';
@@ -178,7 +178,7 @@ function showMessage(message, isSuccess) {
     messageDiv.style.padding = '8px';
     messageDiv.style.borderRadius = '4px';
     messageDiv.style.backgroundColor = isSuccess ? '#d1fae5' : '#fee2e2';
-    
+
     setTimeout(() => {
         messageDiv.style.display = 'none';
     }, 5000);
@@ -186,17 +186,17 @@ function showMessage(message, isSuccess) {
 
 document.getElementById('addDocumentForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
+
     const formData = new FormData(this);
     const messageDiv = document.getElementById('uploadMessage');
     messageDiv.style.display = 'none';
-    
+
     // Show loading state
     const submitBtn = this.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Загрузка...';
     submitBtn.disabled = true;
-    
+
     fetch('/library/upload', {
         method: 'POST',
         body: formData
@@ -224,7 +224,6 @@ document.getElementById('addDocumentForm').addEventListener('submit', function(e
     });
 });
 </script>
-
 </body>
 </html>
 

@@ -13,6 +13,7 @@ import ru.together.documents.entity.Document;
 import ru.together.documents.entity.LibUser;
 import ru.together.documents.repository.UserRepository;
 import ru.together.documents.service.DocumentService;
+import ru.together.documents.service.JwtService;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,15 +26,20 @@ public class LibraryController {
 
     private final DocumentService documentService;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @GetMapping({"", "/"})
-    public String list(@RequestParam(value = "q", required = false) String q, Model model) {
+    public String list(
+            @RequestParam(value = "q", required = false) String q, Model model,
+            @CookieValue(name = "access_token") String token
+    ) {
         if (q == null || q.isBlank()){
             model.addAttribute("documents", documentService.listPublicDocuments());
         } else {
             model.addAttribute("documents", documentService.searchPublicDocuments(q));
         }
         model.addAttribute("q", q);
+        model.addAttribute("username", jwtService.extractUsername(token));
         return "library";
     }
 
@@ -59,7 +65,6 @@ public class LibraryController {
         Map<String, Object> response = new HashMap<>();
         
         try {
-            // Get authenticated libUser
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication == null || !authentication.isAuthenticated()) {
                 response.put("success", false);
