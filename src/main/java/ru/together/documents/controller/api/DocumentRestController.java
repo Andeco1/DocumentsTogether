@@ -1,4 +1,4 @@
-package ru.together.documents.controller;
+package ru.together.documents.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,36 +16,27 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
 @RequiredArgsConstructor
-public class ApiController {
+@RequestMapping("/api/document")
+public class DocumentRestController {
     private final DocumentService documentService;
     private final UserService userService;
 
-    /**
-     * Получить список всех публичных документов
-     */
-    @GetMapping("/document")
+    @GetMapping()
     public ResponseEntity<List<Document>> getPublicDocuments() {
         return ResponseEntity.ok(documentService.listPublicDocuments());
     }
-    /*
-     * Получить один публичный документ по ID
-     */
-    @GetMapping("/document/{id}")
+
+    @GetMapping("/{id}")
     public ResponseEntity<Document> getPublicDocument(@PathVariable Long id) {
         return documentService.getPublicDocument(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Загрузить новый документ для пользователя
-     */
-    @PostMapping("/document")
+    @PostMapping()
     @ResponseBody
     public ResponseEntity<Map<String, Object>> uploadDocument(
             @RequestParam("title") String title,
@@ -92,10 +83,8 @@ public class ApiController {
             return ResponseEntity.badRequest().body(response);
         }
     }
-    /**
-     * Обновить автора и описание документа
-     */
-    @PutMapping("/document/{id}")
+
+    @PutMapping("/{id}")
     public ResponseEntity<Document> updateDocumentMeta(@PathVariable Long id,
                                                        @RequestBody Map<String, String> body) {
         String author = body.get("author");
@@ -105,61 +94,9 @@ public class ApiController {
         return ResponseEntity.ok(updated);
     }
 
-    /**
-     * Удалить документ по ID
-     */
-    @DeleteMapping("/document/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
         documentService.deleteDocument(id);
         return ResponseEntity.noContent().build();
     }
-
-    @PostMapping("/user")
-    public ResponseEntity<?> createUser(
-            @RequestParam String username,
-            @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String confirmPassword) {
-        try {
-            LibUser created = userService.register(username, email, password, confirmPassword);
-            return ResponseEntity.ok(created);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-
-    // READ ONE BY ID
-    @GetMapping("/user/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
-        Optional<LibUser> user = userService.getUserById(id);
-        return user.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    // UPDATE
-    @PutMapping("/user/{id}")
-    public ResponseEntity<?> updateUser(
-            @PathVariable Long id,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String password) {
-        try {
-            LibUser updated = userService.updateUser(id, email, password);
-            return ResponseEntity.ok(updated);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    // DELETE
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        try {
-            userService.deleteUser(id);
-            return ResponseEntity.noContent().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
 }

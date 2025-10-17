@@ -1,4 +1,4 @@
-package ru.together.documents.controller;
+package ru.together.documents.controller.page;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import ru.together.documents.entity.LibUser;
 import ru.together.documents.repository.UserRepository;
 import ru.together.documents.service.DocumentService;
 @Controller
-@RequestMapping("/docs")
+@RequestMapping("/page")
 @RequiredArgsConstructor
 public class DocumentController {
     private final DocumentService documentService;
@@ -23,7 +23,5 @@ public class DocumentController {
         model.addAttribute("documents", documentService.getDocumentsByLibUser(libUser));
         return "documentsList";
     }
-
-
 
 }

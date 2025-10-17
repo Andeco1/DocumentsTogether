@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="library.title">Онлайн библиотека</title>
-    
-    <!-- CSS Files -->
+
     <link rel="stylesheet" th:href="@{/css/variables.css}">
     <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/components.css}">
@@ -13,36 +12,23 @@
     <link rel="stylesheet" th:href="@{/css/themes.css}">
 </head>
 <body>
-    <!-- Header -->
     <header>
         <h1 data-i18n="library.title">Онлайн библиотека</h1>
         <nav>
-            <a href="/" class="nav-link" data-i18n="nav.home">Главная</a>
-            <a href="/info.html" class="nav-link" data-i18n="nav.about">О библиотеке</a>
-            <a href="/statistics" class="nav-link" data-i18n="statistics.title">Статистика</a>
-            
-            <!-- Guest only links -->
-            <div data-guest-only>
-                <a href="/docs/login" class="nav-link" data-i18n="nav.login">Войти</a>
-                <a href="/docs/register" class="nav-link" data-i18n="nav.register">Регистрация</a>
-            </div>
-            
-            <!-- Authenticated user only links -->
-            <div data-auth-only style="display: none;">
-                <a href="/profile" class="nav-link" data-i18n="nav.profile">Профиль</a>
-                <a href="#" onclick="logout()" class="nav-link" data-i18n="nav.logout">Выйти</a>
-            </div>
+            <a href="/static/landing.html" class="nav-link" data-i18n="nav.home">Главная</a>
+            <a href="/static/info.html" class="nav-link" data-i18n="nav.about">О библиотеке</a>
+            <a href="/page/login" class="nav-link" data-i18n="nav.login">Войти</a>
+            <a href="/page" class="nav-link" data-i18n="nav.library">Каталог</a>
+            <a href="/page/statistics" class="nav-link" data-i18n="statistics.title">Статистика</a>
         </nav>
     </header>
 
-    <!-- Layout Container -->
     <div class="layout">
-        <!-- Main Content -->
         <main class="main-content">
             <div class="container">
                 <p th:text="${userGreeting}" class="text-center mb-xl" data-i18n="library.greeting">Добро пожаловать в библиотеку!</p>
                 
-                <form class="search" method="get" action="/library">
+                <form class="search" method="get" action="/page">
                     <input type="text" name="q" data-i18n="library.searchPlaceholder" placeholder="Поиск по названию или автору" th:value="${q}">
                     <button type="submit" data-i18n="library.searchButton">Искать</button>
                 </form>
@@ -53,7 +39,7 @@
                         <div class="text-muted mb-sm" th:text="${d.author}">Автор</div>
                         <p class="text-muted mb-md" th:text="${#strings.abbreviate(d.description, 140)}">Описание</p>
                         <div class="flex gap-sm">
-                            <a th:href="@{'/library/' + ${d.documentId}}" class="btn btn-secondary btn-sm" data-i18n="library.documentDetails">Подробнее</a>
+                            <a th:href="@{'/page/' + ${d.documentId}}" class="btn btn-secondary btn-sm" data-i18n="library.documentDetails">Подробнее</a>
                             <a th:if="${d.file_url}" th:href="${d.file_url}" target="_blank" class="btn btn-primary btn-sm" data-i18n="library.documentDownload">Скачать</a>
                         </div>
                     </article>
@@ -61,7 +47,6 @@
             </div>
         </main>
 
-        <!-- Sidebar -->
         <aside class="sidebar">
         <div class="user-info">
             <h3 id="userInfo" th:text="${username}"></h3>
@@ -87,9 +72,6 @@
                         <option value="ru" data-i18n="preferences.languageRu">Русский</option>
                         <option value="en" data-i18n="preferences.languageEn">English</option>
                     </select>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" data-i18n="preferences.saveButton">Сохранить</button>
                 </div>
             </form>
         </div>
@@ -133,12 +115,6 @@
         </aside>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <p data-i18n="landing.copyright">© 2025 eLibrary. Все права защищены.</p>
-    </footer>
-
-    <!-- JavaScript Files -->
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/theme.js}"></script>
     <script th:src="@{/js/i18n.js}"></script>
@@ -165,7 +141,6 @@ function showMessage(message, isSuccess) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Setup document upload form
     const addDocumentForm = document.getElementById('addDocumentForm');
     if (addDocumentForm) {
         addDocumentForm.addEventListener('submit', function(e) {
@@ -180,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.textContent = window.i18nManager ? window.i18nManager.getTranslation('common.loading') : 'Загрузка...';
             submitBtn.disabled = true;
 
-            fetch('/library/upload', {
+            fetch('/page/upload', {
                 method: 'POST',
                 body: formData
             })
@@ -210,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Setup preferences form
     const preferencesForm = document.getElementById('preferencesForm');
     if (preferencesForm) {
         preferencesForm.addEventListener('submit', function(e) {
@@ -219,31 +193,26 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(this);
             const theme = formData.get('theme');
             const language = formData.get('language');
-            
-            // Update theme
+
             if (window.themeManager) {
                 window.themeManager.switchTheme(theme);
             }
-            
-            // Update language
+
             if (window.i18nManager) {
                 window.i18nManager.switchLanguage(language);
             }
-            
-            // Show success message
+
             showMessage(
                 window.i18nManager ? window.i18nManager.getTranslation('preferences.saveSuccess') : 'Настройки сохранены! Перезагружаем страницу...', 
                 true
             );
-            
-            // Reload page after a short delay
+
             setTimeout(() => {
                 window.location.reload();
             }, 1500);
         });
     }
 
-    // Load user preferences
     loadUserPreferences();
 });
 

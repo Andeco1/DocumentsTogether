@@ -49,13 +49,11 @@ public class S3Service {
                     .key(key)
                     .contentType(file.getContentType())
                     .contentLength(file.getSize())
-                    .acl(ObjectCannedACL.PUBLIC_READ) // Make the object publicly readable
                     .build();
 
             s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(
                     file.getInputStream(), file.getSize()));
 
-            // Return public URL for the uploaded file
             return String.format("https://%s.storage.yandexcloud.net/%s", bucketName, key);
             
         } catch (S3Exception e) {

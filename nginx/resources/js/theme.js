@@ -1,5 +1,3 @@
-// Theme Management System
-
 class ThemeManager {
   constructor() {
     this.currentTheme = this.getStoredTheme() || 'light';
@@ -20,17 +18,13 @@ class ThemeManager {
   }
 
   applyTheme(theme) {
-    // Remove existing theme classes
     document.documentElement.classList.remove('theme-light', 'theme-dark', 'theme-colorblind');
-    
-    // Apply new theme
+
     document.documentElement.classList.add(`theme-${theme}`);
-    
-    // Update stored theme
+
     this.setStoredTheme(theme);
     this.currentTheme = theme;
-    
-    // Update theme selector if it exists
+
     const themeSelect = document.getElementById('themeSelect');
     if (themeSelect) {
       themeSelect.value = theme;

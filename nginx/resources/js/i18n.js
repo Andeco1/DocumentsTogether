@@ -1,4 +1,3 @@
-// Internationalization (i18n) System
 
 class I18nManager {
   constructor() {

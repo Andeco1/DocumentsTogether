@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="auth.register">Регистрация</title>
-    
-    <!-- CSS Files -->
+
     <link rel="stylesheet" th:href="@{/css/variables.css}">
     <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/components.css}">
@@ -48,11 +47,10 @@
         </div>
         <div class="form-footer">
             <span data-i18n="auth.hasAccount">Уже есть аккаунт?</span> 
-            <a href="/docs/login" data-i18n="auth.loginLink">Войти</a>
+            <a href="/page/login" data-i18n="auth.loginLink">Войти</a>
         </div>
     </div>
 
-    <!-- JavaScript Files -->
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/theme.js}"></script>
     <script th:src="@{/js/i18n.js}"></script>
@@ -73,7 +71,7 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
         return;
     }
     
-    fetch('/docs/register', {
+    fetch('/page/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -85,7 +83,7 @@ document.getElementById('registerForm').addEventListener('submit', function(e) {
             document.getElementById('successMessage').style.display = 'block';
             document.getElementById('errorMessage').style.display = 'none';
             setTimeout(() => {
-                window.location.href = '/docs/login';
+                window.location.href = '/page/login';
             }, 2000);
         } else {
             document.getElementById('errorMessage').style.display = 'block';

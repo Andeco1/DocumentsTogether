@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${doc.title} ?: ${doc.file_name}">Документ</title>
-    
-    <!-- CSS Files -->
+
     <link rel="stylesheet" th:href="@{/css/variables.css}">
     <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/components.css}">
@@ -13,16 +12,13 @@
     <link rel="stylesheet" th:href="@{/css/themes.css}">
 </head>
 <body>
-    <!-- Header -->
     <header>
         <h1 data-i18n="nav.home">DocuShare</h1>
         <nav>
-            <a href="/library" class="nav-link" data-i18n="nav.library">← Ко всем материалам</a>
-            <a href="/" class="nav-link" data-i18n="nav.home">Главная</a>
+            <a href="/page" class="nav-link" data-i18n="nav.library">← Ко всем материалам</a>
         </nav>
     </header>
 
-    <!-- Main Content -->
     <main>
         <div class="container">
             <div class="card">
@@ -52,12 +48,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <p data-i18n="landing.copyright">© 2025 eLibrary. Все права защищены.</p>
-    </footer>
-
-    <!-- JavaScript Files -->
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/theme.js}"></script>
     <script th:src="@{/js/i18n.js}"></script>

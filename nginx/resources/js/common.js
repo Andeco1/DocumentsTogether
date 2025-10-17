@@ -1,5 +1,3 @@
-// Common utilities and shared functionality
-
 class CommonUtils {
   constructor() {
     this.init();
@@ -7,66 +5,35 @@ class CommonUtils {
 
   init() {
     this.bindGlobalEvents();
-    this.initializeAuthState();
   }
 
   bindGlobalEvents() {
-    // Global error handling
     window.addEventListener('error', (e) => {
       console.error('Global error:', e.error);
       this.showMessage('An unexpected error occurred', 'error');
     });
 
-    // Global unhandled promise rejection handling
     window.addEventListener('unhandledrejection', (e) => {
       console.error('Unhandled promise rejection:', e.reason);
       this.showMessage('An unexpected error occurred', 'error');
     });
   }
 
-  initializeAuthState() {
-    // Check if user is authenticated by looking for auth token
-    const authToken = localStorage.getItem('authToken');
-    if (authToken) {
-      this.updateUIForAuthenticatedUser();
-    } else {
-      this.updateUIForGuest();
-    }
-  }
 
-  updateUIForAuthenticatedUser() {
-    // Show authenticated user elements
-    const guestElements = document.querySelectorAll('[data-guest-only]');
-    const authElements = document.querySelectorAll('[data-auth-only]');
-    
-    guestElements.forEach(el => el.style.display = 'none');
-    authElements.forEach(el => el.style.display = 'block');
-  }
 
-  updateUIForGuest() {
-    // Show guest elements
-    const guestElements = document.querySelectorAll('[data-guest-only]');
-    const authElements = document.querySelectorAll('[data-auth-only]');
-    
-    guestElements.forEach(el => el.style.display = 'block');
-    authElements.forEach(el => el.style.display = 'none');
-  }
 
-  // Show message to user
+
   showMessage(message, type = 'info', duration = 5000) {
-    // Remove existing messages
+
     const existingMessages = document.querySelectorAll('.message');
     existingMessages.forEach(msg => msg.remove());
 
-    // Create message element
     const messageDiv = document.createElement('div');
     messageDiv.className = `message message-${type}`;
     messageDiv.textContent = message;
-    
-    // Add to page
+
     document.body.appendChild(messageDiv);
-    
-    // Auto remove after duration
+
     setTimeout(() => {
       if (messageDiv.parentNode) {
         messageDiv.remove();
@@ -74,7 +41,6 @@ class CommonUtils {
     }, duration);
   }
 
-  // Format file size
   formatFileSize(bytes) {
     if (bytes === 0) return '0 Bytes';
     
@@ -85,7 +51,6 @@ class CommonUtils {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
 
-  // Format date
   formatDate(date) {
     const options = {
       year: 'numeric',
@@ -98,12 +63,10 @@ class CommonUtils {
     return new Date(date).toLocaleDateString(this.getCurrentLanguage() || 'ru', options);
   }
 
-  // Get current language from i18n manager
   getCurrentLanguage() {
     return window.i18nManager ? window.i18nManager.getCurrentLanguage() : 'ru';
   }
 
-  // Debounce function
   debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -116,7 +79,6 @@ class CommonUtils {
     };
   }
 
-  // Throttle function
   throttle(func, limit) {
     let inThrottle;
     return function() {
@@ -130,7 +92,6 @@ class CommonUtils {
     };
   }
 
-  // Copy text to clipboard
   async copyToClipboard(text) {
     try {
       await navigator.clipboard.writeText(text);
@@ -141,13 +102,11 @@ class CommonUtils {
     }
   }
 
-  // Validate email
   isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
 
-  // Validate password strength
   validatePassword(password) {
     const minLength = 8;
     const hasUpperCase = /[A-Z]/.test(password);
@@ -165,7 +124,6 @@ class CommonUtils {
     };
   }
 
-  // Get URL parameters
   getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     const result = {};
@@ -175,21 +133,18 @@ class CommonUtils {
     return result;
   }
 
-  // Set URL parameter
   setUrlParam(key, value) {
     const url = new URL(window.location);
     url.searchParams.set(key, value);
     window.history.replaceState({}, '', url);
   }
 
-  // Remove URL parameter
   removeUrlParam(key) {
     const url = new URL(window.location);
     url.searchParams.delete(key);
     window.history.replaceState({}, '', url);
   }
 
-  // Smooth scroll to element
   scrollToElement(element, offset = 0) {
     const elementPosition = element.offsetTop - offset;
     window.scrollTo({
@@ -198,7 +153,6 @@ class CommonUtils {
     });
   }
 
-  // Check if element is in viewport
   isInViewport(element) {
     const rect = element.getBoundingClientRect();
     return (
@@ -209,7 +163,6 @@ class CommonUtils {
     );
   }
 
-  // Lazy load images
   lazyLoadImages() {
     const images = document.querySelectorAll('img[data-src]');
     const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -226,7 +179,6 @@ class CommonUtils {
     images.forEach(img => imageObserver.observe(img));
   }
 
-  // Initialize tooltips
   initTooltips() {
     const tooltipElements = document.querySelectorAll('[data-tooltip]');
     tooltipElements.forEach(element => {
@@ -271,12 +223,10 @@ class CommonUtils {
   }
 }
 
-// Initialize common utils when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   window.commonUtils = new CommonUtils();
 });
 
-// Export for use in other scripts
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = CommonUtils;
 }

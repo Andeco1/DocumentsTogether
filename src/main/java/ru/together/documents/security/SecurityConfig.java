@@ -28,8 +28,8 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/docs/login", "/docs/register", "/docs/auth/**","/statistics","/statistics/**").permitAll()
-                        .requestMatchers("/api/preferences/**").authenticated()
+                        .requestMatchers("/page/register", "/page/login","/api/auth/**").permitAll()
+                        .requestMatchers("/api/document","/api/user","/api/preferences").authenticated()
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )

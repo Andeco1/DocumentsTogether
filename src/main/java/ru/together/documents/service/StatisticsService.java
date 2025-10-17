@@ -39,7 +39,6 @@ public class StatisticsService {
     private final DocumentRepository documentRepository;
     private final UserRepository userRepository;
 
-    // Статистика по документам по месяцам
     public byte[] generateDocumentsByMonthChart() throws IOException {
         List<Document> documents = documentRepository.findAll();
         
@@ -62,8 +61,7 @@ public class StatisticsService {
             "Количество",
             dataset
         );
-        
-        // Настройка стиля
+
         chart.setBackgroundPaint(Color.WHITE);
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(Color.WHITE);
@@ -80,7 +78,6 @@ public class StatisticsService {
         return addWatermarkAndConvertToBytes(chart, 800, 600);
     }
 
-    // Статистика по темам пользователей
     public byte[] generateUserThemesChart() throws IOException {
         List<LibUser> users = userRepository.findAll();
         
@@ -103,14 +100,12 @@ public class StatisticsService {
             true,
             false
         );
-        
-        // Настройка стиля
+
         chart.setBackgroundPaint(Color.WHITE);
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setBackgroundPaint(Color.WHITE);
         plot.setOutlineVisible(false);
-        
-        // Цвета для тем
+
         plot.setSectionPaint("light", new Color(74, 144, 226));
         plot.setSectionPaint("dark", new Color(45, 55, 72));
         plot.setSectionPaint("colorblind", new Color(0, 0, 0));
@@ -118,7 +113,6 @@ public class StatisticsService {
         return addWatermarkAndConvertToBytes(chart, 600, 400);
     }
 
-    // Статистика по языкам пользователей
     public byte[] generateUserLanguagesChart() throws IOException {
         List<LibUser> users = userRepository.findAll();
         
@@ -141,8 +135,7 @@ public class StatisticsService {
             "Количество пользователей",
             dataset
         );
-        
-        // Настройка стиля
+
         chart.setBackgroundPaint(Color.WHITE);
         CategoryPlot plot = chart.getCategoryPlot();
         plot.setBackgroundPaint(Color.WHITE);
@@ -154,7 +147,6 @@ public class StatisticsService {
         return addWatermarkAndConvertToBytes(chart, 600, 400);
     }
 
-    // Статистика по публичности документов
     public byte[] generateDocumentVisibilityChart() throws IOException {
         List<Document> documents = documentRepository.findAll();
         
@@ -172,8 +164,7 @@ public class StatisticsService {
             true,
             false
         );
-        
-        // Настройка стиля
+
         chart.setBackgroundPaint(Color.WHITE);
         PiePlot plot = (PiePlot) chart.getPlot();
         plot.setBackgroundPaint(Color.WHITE);
@@ -185,19 +176,14 @@ public class StatisticsService {
         return addWatermarkAndConvertToBytes(chart, 600, 400);
     }
 
-
-    // Добавление водяного знака и конвертация в байты
     private byte[] addWatermarkAndConvertToBytes(JFreeChart chart, int width, int height) throws IOException {
         BufferedImage chartImage = chart.createBufferedImage(width, height);
-        
-        // Создание изображения с водяным знаком
+
         BufferedImage watermarkedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = watermarkedImage.createGraphics();
-        
-        // Рендеринг основного изображения
+
         g2d.drawImage(chartImage, 0, 0, null);
-        
-        // Добавление водяного знака
+
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Arial", Font.BOLD, 24));
@@ -208,8 +194,7 @@ public class StatisticsService {
         int y = height - 20;
         
         g2d.drawString(watermark, x, y);
-        
-        // Добавление дополнительного водяного знака
+
         g2d.setFont(new Font("Arial", Font.ITALIC, 16));
         fm = g2d.getFontMetrics();
         String dateWatermark = "Generated: " + new Date().toString();
@@ -218,14 +203,12 @@ public class StatisticsService {
         g2d.drawString(dateWatermark, x, y);
         
         g2d.dispose();
-        
-        // Конвертация в байты
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(watermarkedImage, "PNG", baos);
         return baos.toByteArray();
     }
 
-    // Получение общей статистики
     public Map<String, Object> getGeneralStatistics() {
         Map<String, Object> stats = new HashMap<>();
         

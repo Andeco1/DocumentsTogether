@@ -16,18 +16,16 @@ public class PersonalizationService {
     private final UserService userService;
     
     private static final String USER_PREFERENCES_PREFIX = "user_preferences:";
-    private static final long PREFERENCES_TTL = 86400; // 24 hours
+    private static final long PREFERENCES_TTL = 86400;
     
     public UserPreferences getUserPreferences(String username) {
         String key = USER_PREFERENCES_PREFIX + username;
-        
-        // Try to get from Redis first
+
         UserPreferences cached = (UserPreferences) redisTemplate.opsForValue().get(key);
         if (cached != null) {
             return cached;
         }
-        
-        // If not in cache, get from database
+
         LibUser user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));
         
@@ -36,33 +34,25 @@ public class PersonalizationService {
                 user.getTheme(),
                 user.getLanguage()
         );
-        
-        // Cache in Redis
+
         redisTemplate.opsForValue().set(key, preferences, PREFERENCES_TTL, TimeUnit.SECONDS);
         
         return preferences;
     }
     
     public void updateUserPreferences(String username, String theme, String language) {
-        // Update in database
         LibUser user = userService.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));
         
         user.setTheme(theme);
         user.setLanguage(language);
         userService.save(user);
-        
-        // Update cache
+
         UserPreferences preferences = new UserPreferences(username, theme, language);
         String key = USER_PREFERENCES_PREFIX + username;
         redisTemplate.opsForValue().set(key, preferences, PREFERENCES_TTL, TimeUnit.SECONDS);
     }
-    
-    public void clearUserPreferencesCache(String username) {
-        String key = USER_PREFERENCES_PREFIX + username;
-        redisTemplate.delete(key);
-    }
-    
+
     public String getPersonalizedGreeting(String username) {
         UserPreferences prefs = getUserPreferences(username);
         

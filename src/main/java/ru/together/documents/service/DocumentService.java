@@ -45,13 +45,10 @@ public class DocumentService {
             throw new IllegalArgumentException("File cannot be empty");
         }
 
-        // Generate unique file key for S3
         String fileKey = s3Service.generateFileKey(file.getOriginalFilename());
-        
-        // Upload file to S3
+
         String fileUrl = s3Service.uploadFile(file, fileKey);
 
-        // Create document entity
         Document document = new Document();
         document.setLibUser(libUser);
         document.setFile_name(file.getOriginalFilename());
@@ -62,7 +59,6 @@ public class DocumentService {
         document.setPublic(request.isPublic());
         document.setCreatedAt(Instant.now());
 
-        // Save to database
         return documentRepository.save(document);
     }
 
@@ -84,7 +80,6 @@ public class DocumentService {
         Document document = documentRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Document not found"));
 
-        // Удаляем файл из S3, если есть ссылка
         if (document.getFile_url() != null) {
             s3Service.deleteFile(document.getFile_url());
         }

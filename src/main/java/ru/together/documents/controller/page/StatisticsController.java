@@ -1,4 +1,4 @@
-package ru.together.documents.controller;
+package ru.together.documents.controller.page;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/statistics")
+@RequestMapping("/page/statistics")
 @RequiredArgsConstructor
 public class StatisticsController {
 

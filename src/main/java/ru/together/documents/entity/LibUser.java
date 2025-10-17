@@ -23,8 +23,8 @@ public class LibUser {
     private String password;
 
     @Column(nullable = false)
-    private String theme = "light"; // light, dark, colorblind
+    private String theme = "light";
 
     @Column(nullable = false)
-    private String language = "ru"; // ru, en, es, etc.
+    private String language = "ru";
 }

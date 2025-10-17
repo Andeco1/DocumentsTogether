@@ -1,4 +1,4 @@
-package ru.together.documents.controller;
+package ru.together.documents.controller.page;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/library")
+@RequestMapping("/page")
 @RequiredArgsConstructor
 public class LibraryController {
 
@@ -41,8 +41,7 @@ public class LibraryController {
             model.addAttribute("documents", documentService.searchPublicDocuments(q));
         }
         model.addAttribute("q", q);
-        
-        // Add personalization data
+
         if (token != null && !token.isEmpty()) {
             try {
                 String username = jwtService.extractUsername(token);

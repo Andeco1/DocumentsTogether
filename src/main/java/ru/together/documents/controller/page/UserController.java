@@ -1,9 +1,8 @@
-package ru.together.documents.controller;
+package ru.together.documents.controller.page;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.together.documents.service.UserService;
 
 @Controller
-@RequestMapping("/docs")
+@RequestMapping("/page")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -33,7 +32,7 @@ public class UserController {
             redirectAttributes.addAttribute("error", true);
         }
 
-        return "redirect:/docs/register";
+        return "redirect:/page/register";
     }
 
     @PostMapping("/login")
@@ -45,10 +44,10 @@ public class UserController {
         boolean success = userService.login(username,password);
         if(success){
             redirectAttributes.addAttribute("username",username);
-            return "redirect:/library";
+            return "redirect:/page";
         } else {
             redirectAttributes.addAttribute("error", true);
-            return "redirect:/docs/login";
+            return "redirect:/page/login";
         }
     }
 }

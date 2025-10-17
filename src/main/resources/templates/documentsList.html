@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="documents.title">Мои документы — DocuShare</title>
-    
-    <!-- CSS Files -->
+
     <link rel="stylesheet" th:href="@{/css/variables.css}">
     <link rel="stylesheet" th:href="@{/css/base.css}">
     <link rel="stylesheet" th:href="@{/css/components.css}">
@@ -13,17 +12,16 @@
     <link rel="stylesheet" th:href="@{/css/themes.css}">
 </head>
 <body>
-    <!-- Header -->
     <header>
         <h1 data-i18n="nav.home">DocuShare</h1>
         <nav>
-            <a href="/library" class="nav-link" data-i18n="nav.library">Библиотека</a>
-            <a href="/profile" class="nav-link" data-i18n="nav.profile">Профиль</a>
-            <a href="#" onclick="logout()" class="nav-link" data-i18n="nav.logout">Выйти</a>
+            <a href="landing.html" class="nav-link" data-i18n="nav.home">Главная</a>
+            <a href="info.html" class="nav-link" data-i18n="nav.about">О библиотеке</a>
+            <a href="/page/login" class="nav-link" data-i18n="nav.login">Войти</a>
+            <a href="/page" class="nav-link" data-i18n="nav.library">Каталог</a>
+            <a href="/page/statistics" class="nav-link" data-i18n="statistics.title">Статистика</a>
         </nav>
     </header>
-
-    <!-- Main Content -->
     <main>
         <div class="container">
             <section class="card">
@@ -38,7 +36,7 @@
                             <span class="document-name" th:text="${doc.title} ?: ${doc.file_name}" data-i18n="documents.documentName">Название документа</span>
                             <div class="document-actions flex gap-sm">
                                 <button class="btn btn-secondary btn-sm" th:onclick="'location.href=\'/documents/edit/' + ${doc.documentId} + '\''" data-i18n="documents.edit">Изменить</button>
-                                <form th:action="@{/documents/delete/{id}(id=${doc.documentId})}" method="post" style="display:inline;">
+                                <form th:action="@{/api/document/{id}(id=${doc.documentId})}" method="delete" style="display:inline;">
                                     <button type="submit" class="btn btn-secondary btn-sm" data-i18n="documents.delete">Удалить</button>
                                 </form>
                             </div>
@@ -48,13 +46,6 @@
             </section>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer>
-        <p data-i18n="landing.copyright">© 2025 eLibrary. Все права защищены.</p>
-    </footer>
-
-    <!-- JavaScript Files -->
     <script th:src="@{/js/common.js}"></script>
     <script th:src="@{/js/theme.js}"></script>
     <script th:src="@{/js/i18n.js}"></script>

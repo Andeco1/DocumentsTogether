@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserPreferences {
     private String username;
-    private String theme; // light, dark, colorblind
-    private String language; // ru, en, etc.
+    private String theme;
+    private String language;
 }

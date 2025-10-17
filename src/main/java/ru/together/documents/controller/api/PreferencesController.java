@@ -1,4 +1,4 @@
-package ru.together.documents.controller;
+package ru.together.documents.controller.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -48,13 +48,11 @@ public class PreferencesController {
         }
 
         String username = authentication.getName();
-        
-        // Validate theme
+
         if (!theme.matches("^(light|dark|colorblind)$")) {
             return ResponseEntity.badRequest().body(Map.of("error", "Invalid theme"));
         }
-        
-        // Validate language
+
         if (!language.matches("^(ru|en)$")) {
             return ResponseEntity.badRequest().body(Map.of("error", "Invalid language"));
         }
