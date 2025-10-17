@@ -1,314 +1,249 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:class="${themeClass}">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:class="${themeClass ?: 'theme-light'}">
 <head>
     <meta charset="UTF-8">
-    <title>Онлайн библиотека</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
-    <link rel="stylesheet" th:href="@{/css/documents.css}">
-    <style>
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-        .main-content {
-            flex: 1;
-            padding: 20px;
-        }
-        .sidebar {
-            width: 300px;
-            background: #f8f9fa;
-            border-left: 1px solid #e5e7eb;
-            padding: 20px;
-        }
-        .library-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:16px}
-        .card{border:1px solid #e5e7eb;border-radius:8px;padding:12px;background:#fff}
-        .card h3{margin:0 0 8px 0;font-size:16px}
-        .muted{color:#6b7280;font-size:12px}
-        .search{display:flex;gap:8px;margin-bottom:20px}
-        .search input{flex:1;padding:8px}
-        .actions{margin-top:8px}
-        .libUser-info {
-            background: white;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .add-document-btn {
-            width: 100%;
-            padding: 12px;
-            background: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-        .add-document-btn:hover {
-            background: #2563eb;
-        }
-        .add-document-panel {
-            display: none;
-            background: white;
-            border-radius: 8px;
-            padding: 16px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .add-document-panel.show {
-            display: block;
-        }
-        .form-group {
-            margin-bottom: 12px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 4px;
-            font-weight: 500;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #d1d5db;
-            border-radius: 4px;
-        }
-        .form-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-        }
-        .btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: #3b82f6;
-            color: white;
-        }
-        .btn-secondary {
-            background: #6b7280;
-            color: white;
-        }
-        
-        /* Theme styles */
-        .theme-dark {
-            background-color: #1a1a1a;
-            color: #e5e5e5;
-        }
-        .theme-dark .card {
-            background: #2d2d2d;
-            border-color: #404040;
-            color: #e5e5e5;
-        }
-        .theme-dark .sidebar {
-            background: #2d2d2d;
-            border-color: #404040;
-        }
-        .theme-dark .libUser-info {
-            background: #2d2d2d;
-            color: #e5e5e5;
-        }
-        .theme-dark .add-document-panel {
-            background: #2d2d2d;
-            color: #e5e5e5;
-        }
-        .theme-dark input, .theme-dark textarea {
-            background: #404040;
-            border-color: #555;
-            color: #e5e5e5;
-        }
-        
-        .theme-colorblind {
-            background-color: #f8f9fa;
-            color: #000;
-        }
-        .theme-colorblind .card {
-            background: #fff;
-            border: 2px solid #000;
-        }
-        .theme-colorblind .btn-primary {
-            background: #000;
-            border: 2px solid #000;
-        }
-        .theme-colorblind .btn-secondary {
-            background: #fff;
-            color: #000;
-            border: 2px solid #000;
-        }
-        
-        .preferences-panel {
-            background: white;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .theme-dark .preferences-panel {
-            background: #2d2d2d;
-            color: #e5e5e5;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="library.title">Онлайн библиотека</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/themes.css}">
 </head>
 <body>
-<header>
-    <h2>Онлайн библиотека</h2>
-    <p th:text="${userGreeting}" class="greeting">Добро пожаловать в библиотеку!</p>
-</header>
+    <!-- Header -->
+    <header>
+        <h1 data-i18n="library.title">Онлайн библиотека</h1>
+        <nav>
+            <a href="/" class="nav-link" data-i18n="nav.home">Главная</a>
+            <a href="/info.html" class="nav-link" data-i18n="nav.about">О библиотеке</a>
+            <a href="/statistics" class="nav-link" data-i18n="statistics.title">Статистика</a>
+            
+            <!-- Guest only links -->
+            <div data-guest-only>
+                <a href="/docs/login" class="nav-link" data-i18n="nav.login">Войти</a>
+                <a href="/docs/register" class="nav-link" data-i18n="nav.register">Регистрация</a>
+            </div>
+            
+            <!-- Authenticated user only links -->
+            <div data-auth-only style="display: none;">
+                <a href="/profile" class="nav-link" data-i18n="nav.profile">Профиль</a>
+                <a href="#" onclick="logout()" class="nav-link" data-i18n="nav.logout">Выйти</a>
+            </div>
+        </nav>
+    </header>
 
-<div class="layout">
-    <main class="main-content">
-        <form class="search" method="get" action="/library">
-            <input type="text" name="q" placeholder="Поиск по названию или автору" th:value="${q}">
-            <button type="submit">Искать</button>
-        </form>
+    <!-- Layout Container -->
+    <div class="layout">
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <p th:text="${userGreeting}" class="text-center mb-xl" data-i18n="library.greeting">Добро пожаловать в библиотеку!</p>
+                
+                <form class="search" method="get" action="/library">
+                    <input type="text" name="q" data-i18n="library.searchPlaceholder" placeholder="Поиск по названию или автору" th:value="${q}">
+                    <button type="submit" data-i18n="library.searchButton">Искать</button>
+                </form>
 
-        <section class="library-grid">
-            <article class="card" th:each="d : ${documents}">
-                <h3 th:text="${d.title} ?: ${d.file_name}">Название</h3>
-                <div class="muted" th:text="${d.author}">Автор</div>
-                <p class="muted" th:text="${#strings.abbreviate(d.description, 140)}">Описание</p>
-                <div class="actions">
-                    <a th:href="@{'/library/' + ${d.documentId}}">Подробнее</a>
-                    <span> · </span>
-                    <a th:if="${d.file_url}" th:href="${d.file_url}" target="_blank">Скачать</a>
-                </div>
-            </article>
-        </section>
-    </main>
+                <section class="library-grid">
+                    <article class="document-card" th:each="d : ${documents}">
+                        <h3 th:text="${d.title} ?: ${d.file_name}">Название</h3>
+                        <div class="text-muted mb-sm" th:text="${d.author}">Автор</div>
+                        <p class="text-muted mb-md" th:text="${#strings.abbreviate(d.description, 140)}">Описание</p>
+                        <div class="flex gap-sm">
+                            <a th:href="@{'/library/' + ${d.documentId}}" class="btn btn-secondary btn-sm" data-i18n="library.documentDetails">Подробнее</a>
+                            <a th:if="${d.file_url}" th:href="${d.file_url}" target="_blank" class="btn btn-primary btn-sm" data-i18n="library.documentDownload">Скачать</a>
+                        </div>
+                    </article>
+                </section>
+            </div>
+        </main>
 
-    <aside class="sidebar">
-        <div class="libUser-info">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+        <div class="user-info">
             <h3 id="userInfo" th:text="${username}"></h3>
             <div id="userActions">
-                <button onclick="logout()" class="btn btn-secondary" style="width: 100%;">Выйти</button>
+                <button onclick="logout()" class="btn btn-secondary" style="width: 100%;" data-i18n="nav.logout">Выйти</button>
             </div>
         </div>
 
         <div class="preferences-panel" id="preferencesPanel">
-            <h4>Настройки</h4>
+            <h4 data-i18n="preferences.title">Настройки</h4>
             <form id="preferencesForm">
                 <div class="form-group">
-                    <label for="themeSelect">Тема:</label>
+                    <label for="themeSelect" data-i18n="preferences.theme">Тема:</label>
                     <select id="themeSelect" name="theme">
-                        <option value="light">Светлая</option>
-                        <option value="dark">Темная</option>
-                        <option value="colorblind">Для людей с цветовой слепотой</option>
+                        <option value="light" data-i18n="preferences.themeLight">Светлая</option>
+                        <option value="dark" data-i18n="preferences.themeDark">Темная</option>
+                        <option value="colorblind" data-i18n="preferences.themeColorblind">Для людей с цветовой слепотой</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="languageSelect">Язык:</label>
+                    <label for="languageSelect" data-i18n="preferences.language">Язык:</label>
                     <select id="languageSelect" name="language">
-                        <option value="ru">Русский</option>
-                        <option value="en">English</option>
+                        <option value="ru" data-i18n="preferences.languageRu">Русский</option>
+                        <option value="en" data-i18n="preferences.languageEn">English</option>
                     </select>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" data-i18n="preferences.saveButton">Сохранить</button>
                 </div>
             </form>
         </div>
 
-        <button class="add-document-btn" id="addDocumentBtn" onclick="toggleAddDocumentPanel()">
+        <button class="btn btn-primary" id="addDocumentBtn" onclick="toggleAddDocumentPanel()" style="width: 100%; margin-bottom: var(--spacing-lg);" data-i18n="library.addDocument">
             + Добавить документ
         </button>
 
         <div class="add-document-panel" id="addDocumentPanel">
-            <h4>Добавить новый документ</h4>
+            <h4 data-i18n="library.addDocument">Добавить новый документ</h4>
             <form id="addDocumentForm" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="title">Название:</label>
+                    <label for="title" data-i18n="library.documentTitle">Название:</label>
                     <input type="text" id="title" name="title" required>
                 </div>
                 <div class="form-group">
-                    <label for="author">Автор:</label>
+                    <label for="author" data-i18n="library.documentAuthor">Автор:</label>
                     <input type="text" id="author" name="author">
                 </div>
                 <div class="form-group">
-                    <label for="description">Описание:</label>
+                    <label for="description" data-i18n="library.documentDescription">Описание:</label>
                     <textarea id="description" name="description" rows="3"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="file">Файл:</label>
+                    <label for="file" data-i18n="library.documentFile">Файл:</label>
                     <input type="file" id="file" name="file" required>
                 </div>
                 <div class="form-group">
                     <label>
                         <input type="checkbox" id="isPublic" name="isPublic" checked>
-                        Сделать публичным
+                        <span data-i18n="library.documentPublic">Сделать публичным</span>
                     </label>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Добавить</button>
-                    <button type="button" class="btn btn-secondary" onclick="toggleAddDocumentPanel()">Отмена</button>
+                    <button type="submit" class="btn btn-primary" data-i18n="common.add">Добавить</button>
+                    <button type="button" class="btn btn-secondary" onclick="toggleAddDocumentPanel()" data-i18n="common.cancel">Отмена</button>
                 </div>
             </form>
             <div id="uploadMessage" style="margin-top: 10px; display: none;"></div>
         </div>
-    </aside>
-</div>
+        </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p data-i18n="landing.copyright">© 2025 eLibrary. Все права защищены.</p>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+    <script th:src="@{/js/i18n.js}"></script>
+
 <script>
 function toggleAddDocumentPanel() {
     const panel = document.getElementById('addDocumentPanel');
     panel.classList.toggle('show');
 }
-    function showMessage(message, isSuccess) {
-    const messageDiv = document.getElementById('uploadMessage');
-    messageDiv.textContent = message;
-    messageDiv.style.display = 'block';
-    messageDiv.style.color = isSuccess ? '#10b981' : '#ef4444';
-    messageDiv.style.padding = '8px';
-    messageDiv.style.borderRadius = '4px';
-    messageDiv.style.backgroundColor = isSuccess ? '#d1fae5' : '#fee2e2';
 
-    setTimeout(() => {
-        messageDiv.style.display = 'none';
-    }, 5000);
+function showMessage(message, isSuccess) {
+    if (window.commonUtils) {
+        window.commonUtils.showMessage(message, isSuccess ? 'success' : 'error');
+    } else {
+        const messageDiv = document.getElementById('uploadMessage');
+        messageDiv.textContent = message;
+        messageDiv.style.display = 'block';
+        messageDiv.className = `message message-${isSuccess ? 'success' : 'error'}`;
+
+        setTimeout(() => {
+            messageDiv.style.display = 'none';
+        }, 5000);
+    }
 }
 
-document.getElementById('addDocumentForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup document upload form
+    const addDocumentForm = document.getElementById('addDocumentForm');
+    if (addDocumentForm) {
+        addDocumentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-    const formData = new FormData(this);
-    const messageDiv = document.getElementById('uploadMessage');
-    messageDiv.style.display = 'none';
+            const formData = new FormData(this);
+            const messageDiv = document.getElementById('uploadMessage');
+            messageDiv.style.display = 'none';
 
-    // Show loading state
-    const submitBtn = this.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Загрузка...';
-    submitBtn.disabled = true;
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = window.i18nManager ? window.i18nManager.getTranslation('common.loading') : 'Загрузка...';
+            submitBtn.disabled = true;
 
-    fetch('/library/upload', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showMessage('Документ успешно загружен!', true);
-            this.reset();
-            toggleAddDocumentPanel();
-            // Reload the page to show the new document
+            fetch('/library/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage(
+                        window.i18nManager ? window.i18nManager.getTranslation('library.uploadSuccess') : 'Документ успешно загружен!', 
+                        true
+                    );
+                    this.reset();
+                    toggleAddDocumentPanel();
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    showMessage('Ошибка: ' + data.message, false);
+                }
+            })
+            .catch(error => {
+                showMessage('Ошибка загрузки: ' + error.message, false);
+            })
+            .finally(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        });
+    }
+
+    // Setup preferences form
+    const preferencesForm = document.getElementById('preferencesForm');
+    if (preferencesForm) {
+        preferencesForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const theme = formData.get('theme');
+            const language = formData.get('language');
+            
+            // Update theme
+            if (window.themeManager) {
+                window.themeManager.switchTheme(theme);
+            }
+            
+            // Update language
+            if (window.i18nManager) {
+                window.i18nManager.switchLanguage(language);
+            }
+            
+            // Show success message
+            showMessage(
+                window.i18nManager ? window.i18nManager.getTranslation('preferences.saveSuccess') : 'Настройки сохранены! Перезагружаем страницу...', 
+                true
+            );
+            
+            // Reload page after a short delay
             setTimeout(() => {
                 window.location.reload();
             }, 1500);
-        } else {
-            showMessage('Ошибка: ' + data.message, false);
-        }
-    })
-    .catch(error => {
-        showMessage('Ошибка загрузки: ' + error.message, false);
-    })
-    .finally(() => {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    });
-});
+        });
+    }
 
-// Preferences functionality
-document.addEventListener('DOMContentLoaded', function() {
+    // Load user preferences
     loadUserPreferences();
 });
 
@@ -316,10 +251,10 @@ function loadUserPreferences() {
     fetch('/api/preferences')
     .then(response => response.json())
     .then(data => {
-        if (data.theme) {
+        if (data.theme && document.getElementById('themeSelect')) {
             document.getElementById('themeSelect').value = data.theme;
         }
-        if (data.language) {
+        if (data.language && document.getElementById('languageSelect')) {
             document.getElementById('languageSelect').value = data.language;
         }
     })
@@ -328,35 +263,9 @@ function loadUserPreferences() {
     });
 }
 
-document.getElementById('preferencesForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    const theme = formData.get('theme');
-    const language = formData.get('language');
-    
-    fetch('/api/preferences', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `theme=${theme}&language=${language}`
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showMessage('Настройки сохранены! Перезагружаем страницу...', true);
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
-        } else {
-            showMessage('Ошибка: ' + data.error, false);
-        }
-    })
-    .catch(error => {
-        showMessage('Ошибка сохранения настроек: ' + error.message, false);
-    });
-});
+function logout() {
+    window.location.href = '/docs/login';
+}
 </script>
 </body>
 </html>

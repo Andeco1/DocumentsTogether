@@ -1,37 +1,68 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:class="${themeClass ?: 'theme-light'}">
 <head>
     <meta charset="UTF-8">
-    <title>Мои документы — DocuShare</title>
-    <link rel="stylesheet" href="@{/css/documents.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="documents.title">Мои документы — DocuShare</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/themes.css}">
 </head>
 <body>
-<header>
-    <h2>DocuShare</h2>
-    <nav>
-        <a href="/profile">Профиль</a>
-    </nav>
-</header>
+    <!-- Header -->
+    <header>
+        <h1 data-i18n="nav.home">DocuShare</h1>
+        <nav>
+            <a href="/library" class="nav-link" data-i18n="nav.library">Библиотека</a>
+            <a href="/profile" class="nav-link" data-i18n="nav.profile">Профиль</a>
+            <a href="#" onclick="logout()" class="nav-link" data-i18n="nav.logout">Выйти</a>
+        </nav>
+    </header>
 
-<main>
-    <section class="documents-section">
-        <h1>Мои документы</h1>
-        <button class="create-button" onclick="location.href='/documents'">Создать файл</button>
-
-        <ul class="documents-list">
-            <li th:each="doc : ${documents}" class="document-item">
-                <span class="document-name" th:text="${doc.title} ?: ${doc.file_name}">Название документа</span>
-                <div class="document-actions">
-                    <button class="edit-button" th:onclick="'location.href=\'/documents/edit/' + ${doc.documentId} + '\''">Изменить</button>
-                    <form th:action="@{/documents/delete/{id}(id=${doc.documentId})}" method="post" style="display:inline;">
-                        <button type="submit" class="delete-button">Удалить</button>
-                    </form>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <section class="card">
+                <div class="card-header">
+                    <h1 data-i18n="documents.myDocuments">Мои документы</h1>
                 </div>
-            </li>
-        </ul>
-    </section>
-</main>
+                <div class="card-body">
+                    <button class="btn btn-primary mb-lg" onclick="location.href='/documents'" data-i18n="documents.createFile">Создать файл</button>
 
+                    <ul class="documents-list">
+                        <li th:each="doc : ${documents}" class="document-item flex justify-between items-center p-md mb-sm" style="border-bottom: 1px solid var(--border-color);">
+                            <span class="document-name" th:text="${doc.title} ?: ${doc.file_name}" data-i18n="documents.documentName">Название документа</span>
+                            <div class="document-actions flex gap-sm">
+                                <button class="btn btn-secondary btn-sm" th:onclick="'location.href=\'/documents/edit/' + ${doc.documentId} + '\''" data-i18n="documents.edit">Изменить</button>
+                                <form th:action="@{/documents/delete/{id}(id=${doc.documentId})}" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-secondary btn-sm" data-i18n="documents.delete">Удалить</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
 
+    <!-- Footer -->
+    <footer>
+        <p data-i18n="landing.copyright">© 2025 eLibrary. Все права защищены.</p>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+    <script th:src="@{/js/i18n.js}"></script>
+
+    <script>
+        function logout() {
+            window.location.href = '/docs/login';
+        }
+    </script>
 </body>
 </html>

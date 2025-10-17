@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:class="${themeClass ?: 'theme-light'}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle ?: 'DocuShare'}">DocuShare</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/themes.css}">
+    
+    <!-- Additional CSS for specific pages -->
+    <th:block th:if="${additionalCSS}">
+        <link rel="stylesheet" th:href="${additionalCSS}">
+    </th:block>
+</head>
+<body>
+    <!-- Header -->
+    <header th:fragment="header">
+        <h1 th:text="${headerTitle ?: 'DocuShare'}">DocuShare</h1>
+        <nav>
+            <a href="/" class="nav-link" data-i18n="nav.home">Главная</a>
+            <a href="/library" class="nav-link" data-i18n="nav.library">Библиотека</a>
+            <a href="/info.html" class="nav-link" data-i18n="nav.about">О библиотеке</a>
+            
+            <!-- Guest only links -->
+            <div data-guest-only>
+                <a href="/docs/login" class="nav-link" data-i18n="nav.login">Войти</a>
+                <a href="/docs/register" class="nav-link" data-i18n="nav.register">Регистрация</a>
+            </div>
+            
+            <!-- Authenticated user only links -->
+            <div data-auth-only style="display: none;">
+                <a href="/profile" class="nav-link" data-i18n="nav.profile">Профиль</a>
+                <a href="#" onclick="logout()" class="nav-link" data-i18n="nav.logout">Выйти</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main th:fragment="main">
+        <div class="container">
+            <!-- Page content will be inserted here -->
+            <th:block th:replace="${content}">
+                <!-- Default content -->
+            </th:block>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer th:fragment="footer">
+        <p data-i18n="landing.copyright">© 2025 eLibrary. Все права защищены.</p>
+    </footer>
+
+    <!-- Theme and Language Switchers (for authenticated users) -->
+    <div th:fragment="themeLanguageSwitchers" data-auth-only style="display: none;">
+        <div class="preferences-panel" id="preferencesPanel">
+            <h4 data-i18n="preferences.title">Настройки</h4>
+            <form id="preferencesForm">
+                <div class="form-group">
+                    <label for="themeSelect" data-i18n="preferences.theme">Тема:</label>
+                    <select id="themeSelect" name="theme">
+                        <option value="light" data-i18n="preferences.themeLight">Светлая</option>
+                        <option value="dark" data-i18n="preferences.themeDark">Темная</option>
+                        <option value="colorblind" data-i18n="preferences.themeColorblind">Для людей с цветовой слепотой</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="languageSelect" data-i18n="preferences.language">Язык:</label>
+                    <select id="languageSelect" name="language">
+                        <option value="ru" data-i18n="preferences.languageRu">Русский</option>
+                        <option value="en" data-i18n="preferences.languageEn">English</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" data-i18n="preferences.saveButton">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+    <script th:src="@{/js/i18n.js}"></script>
+    
+    <!-- Additional JavaScript for specific pages -->
+    <th:block th:if="${additionalJS}">
+        <script th:src="${additionalJS}"></script>
+    </th:block>
+
+    <!-- Inline JavaScript for common functionality -->
+    <script>
+        // Logout function
+        function logout() {
+            localStorage.removeItem('authToken');
+            window.location.href = '/docs/login';
+        }
+
+        // Initialize preferences form
+        document.addEventListener('DOMContentLoaded', function() {
+            const preferencesForm = document.getElementById('preferencesForm');
+            if (preferencesForm) {
+                preferencesForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(this);
+                    const theme = formData.get('theme');
+                    const language = formData.get('language');
+                    
+                    // Update theme
+                    if (window.themeManager) {
+                        window.themeManager.switchTheme(theme);
+                    }
+                    
+                    // Update language
+                    if (window.i18nManager) {
+                        window.i18nManager.switchLanguage(language);
+                    }
+                    
+                    // Show success message
+                    if (window.commonUtils) {
+                        window.commonUtils.showMessage(
+                            window.i18nManager ? window.i18nManager.getTranslation('preferences.saveSuccess') : 'Settings saved! Reloading page...',
+                            'success'
+                        );
+                    }
+                    
+                    // Reload page after a short delay
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

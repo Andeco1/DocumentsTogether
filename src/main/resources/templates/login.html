@@ -1,28 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:class="${themeClass ?: 'theme-light'}">
 <head>
     <meta charset="UTF-8">
-    <title>Вход в систему</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="auth.login">Вход в систему</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/themes.css}">
+    
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--bg-primary);
+        }
+    </style>
 </head>
 <body>
-<div class="form-container">
-    <h2>Вход</h2>
-    <form id="loginForm">
-        <input type="text" id="username" placeholder="Имя пользователя" required>
-        <input type="password" id="password" placeholder="Пароль" required>
-        <button type="submit" class="btn-login">Войти</button>
-    </form>
-    <div id="errorMessage" class="error-message" style="display: none;">
-        Неверное имя пользователя или пароль
+    <div class="form-container">
+        <h2 data-i18n="auth.login">Вход</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="text" id="username" data-i18n="auth.username" placeholder="Имя пользователя" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" data-i18n="auth.password" placeholder="Пароль" required>
+            </div>
+            <button type="submit" class="btn btn-primary" data-i18n="auth.loginButton">Войти</button>
+        </form>
+        <div id="errorMessage" class="message message-error" style="display: none;" data-i18n="auth.loginError">
+            Неверное имя пользователя или пароль
+        </div>
+        <div id="successMessage" class="message message-success" style="display: none;" data-i18n="auth.loginSuccess">
+            Вы успешно вошли
+        </div>
+        <div class="form-footer">
+            <span data-i18n="auth.noAccount">Нет аккаунта?</span> 
+            <a href="/docs/register" data-i18n="auth.registerLink">Зарегистрироваться</a>
+        </div>
     </div>
-    <div id="successMessage" class="success-message" style="display: none;">
-        Вы успешно вошли
-    </div>
-    <div class="form-footer">
-        Нет аккаунта? <a href="/docs/register">Зарегистрироваться</a>
-    </div>
-</div>
+
+    <!-- JavaScript Files -->
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+    <script th:src="@{/js/i18n.js}"></script>
 
 <script>
     document.getElementById("loginForm").addEventListener("submit", async function(e) {

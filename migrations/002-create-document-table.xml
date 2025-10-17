@@ -28,7 +28,7 @@
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="document"
+                baseTableName="documents"
                 baseColumnNames="user_id"
                 referencedTableName="users"
                 referencedColumnNames="id"

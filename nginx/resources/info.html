@@ -1,47 +1,66 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="theme-light">
 <head>
     <meta charset="UTF-8">
-    <title>О библиотеке — eLibrary</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="info.title">О библиотеке — eLibrary</title>
+    <link rel="stylesheet" href="/css/unified.css">
 </head>
 <body>
-<header>
-    <h2>eLibrary</h2>
-    <nav>
-        <a href="landing.html">Главная</a>
-        <a href="info.html">О библиотеке</a>
-        <a href="/library">Каталог</a>
-        <a href="/docs/login">Войти</a>
-    </nav>
-</header>
+    <header>
+        <h1 data-i18n="nav.home">eLibrary</h1>
+        <nav>
+            <a href="landing.html" class="nav-link" data-i18n="nav.home">Главная</a>
+            <a href="info.html" class="nav-link" data-i18n="nav.about">О библиотеке</a>
+            <a href="/library" class="nav-link" data-i18n="nav.library">Каталог</a>
+            <a href="/docs/login" class="nav-link" data-i18n="nav.login">Войти</a>
+            
+            <!-- Theme and Language Switchers -->
+            <div class="theme-switcher">
+                <select id="themeSelect">
+                    <option value="light" data-i18n="theme.light">Светлая</option>
+                    <option value="dark" data-i18n="theme.dark">Темная</option>
+                    <option value="colorblind" data-i18n="theme.colorblind">Для людей с цветовой слепотой</option>
+                </select>
+            </div>
+            
+            <div class="language-switcher">
+                <select id="languageSelect">
+                    <option value="ru" data-i18n="language.ru">Русский</option>
+                    <option value="en" data-i18n="language.en">English</option>
+                </select>
+            </div>
+        </nav>
+    </header>
 
-<div class="content">
-    <h1>О нашей библиотеке</h1>
-    <div class="info-block">
-        <h3>Миссия</h3>
-        <p>eLibrary — это открытый каталог материалов для чтения и скачивания.
-            Мы делаем знания доступными для всех.</p>
-    </div>
+    <main>
+        <div class="content">
+            <h1 data-i18n="info.aboutTitle">О нашей библиотеке</h1>
+            <p data-i18n="info.aboutDesc">eLibrary — это современная онлайн-платформа для хранения, поиска и обмена документами.</p>
+            
+            <div class="feature">
+                <h3 data-i18n="info.featuresTitle">Основные возможности</h3>
+                <ul>
+                    <li data-i18n="info.feature1">Публичный доступ к документам</li>
+                    <li data-i18n="info.feature2">Быстрый поиск по содержимому</li>
+                    <li data-i18n="info.feature3">Загрузка собственных материалов</li>
+                    <li data-i18n="info.feature4">Удобная навигация и фильтрация</li>
+                </ul>
+            </div>
 
-    <div class="info-block">
-        <h3>Как это работает?</h3>
-        <p>Переходите в каталог, находите нужный материал по названию или автору,
-            открывайте страницу документа и скачивайте файл при наличии ссылки.</p>
-    </div>
+            <div class="feature">
+                <h3 data-i18n="info.contactTitle">Контакты</h3>
+                <p data-i18n="info.contactDesc">Если у вас есть вопросы или предложения, свяжитесь с нами.</p>
+            </div>
+        </div>
+    </main>
 
-    <div class="info-block">
-        <h3>Преимущества</h3>
-        <ul>
-            <li>Поиск по названию и автору</li>
-            <li>Простая и быстрая навигация</li>
-            <li>Публичный доступ к материалам</li>
-        </ul>
-    </div>
-</div>
+    <footer>
+        <p data-i18n="landing.copyright">© 2025 eLibrary. Все права защищены.</p>
+    </footer>
 
-<footer>
-    <p>© 2025 eLibrary. Все права защищены.</p>
-</footer>
+    <!-- JavaScript Files -->
+    <script src="/js/theme.js"></script>
+    <script src="/js/i18n.js"></script>
 </body>
 </html>

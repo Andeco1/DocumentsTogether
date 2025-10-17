@@ -1,0 +1,786 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="005-insert-fixtures" author="yan">
+        <!-- Вставка тестовых пользователей -->
+        <insert tableName="users">
+            <column name="username" value="admin"/>
+            <column name="email" value="admin@docushare.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="light"/>
+            <column name="language" value="ru"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="john_doe"/>
+            <column name="email" value="john@example.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="dark"/>
+            <column name="language" value="en"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="maria_garcia"/>
+            <column name="email" value="maria@example.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="colorblind"/>
+            <column name="language" value="ru"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="alex_smith"/>
+            <column name="email" value="alex@example.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="light"/>
+            <column name="language" value="en"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="anna_petrov"/>
+            <column name="email" value="anna@example.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="dark"/>
+            <column name="language" value="ru"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="david_wilson"/>
+            <column name="email" value="david@example.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="light"/>
+            <column name="language" value="en"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="elena_kozlov"/>
+            <column name="email" value="elena@example.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="colorblind"/>
+            <column name="language" value="ru"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="michael_brown"/>
+            <column name="email" value="michael@example.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="dark"/>
+            <column name="language" value="en"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="sophie_martin"/>
+            <column name="email" value="sophie@example.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="light"/>
+            <column name="language" value="ru"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="username" value="robert_taylor"/>
+            <column name="email" value="robert@example.com"/>
+            <column name="password" value="$2a$10$N.zmdr9k7uOCQb376NoUnuTJ8iAt6Z5EHsM8lE9lBOsl7iKTVEFDi"/>
+            <column name="theme" value="colorblind"/>
+            <column name="language" value="en"/>
+        </insert>
+
+        <!-- Вставка тестовых документов -->
+        <insert tableName="documents">
+            <column name="user_id" value="1"/>
+            <column name="file_name" value="spring-boot-guide.pdf"/>
+            <column name="file_url" value="https://example.com/files/spring-boot-guide.pdf"/>
+            <column name="title" value="Spring Boot Complete Guide"/>
+            <column name="author" value="John Smith"/>
+            <column name="description" value="Comprehensive guide to Spring Boot framework with examples and best practices"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-01-15T10:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="2"/>
+            <column name="file_name" value="javascript-advanced.pdf"/>
+            <column name="file_url" value="https://example.com/files/javascript-advanced.pdf"/>
+            <column name="title" value="Advanced JavaScript Techniques"/>
+            <column name="author" value="Maria Garcia"/>
+            <column name="description" value="Deep dive into advanced JavaScript concepts and modern development practices"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-01-20T14:15:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="3"/>
+            <column name="file_name" value="database-design.docx"/>
+            <column name="file_url" value="https://example.com/files/database-design.docx"/>
+            <column name="title" value="Database Design Principles"/>
+            <column name="author" value="Alex Smith"/>
+            <column name="description" value="Fundamental principles of database design and normalization"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-02-01T09:45:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="4"/>
+            <column name="file_name" value="react-patterns.pdf"/>
+            <column name="file_url" value="https://example.com/files/react-patterns.pdf"/>
+            <column name="title" value="React Design Patterns"/>
+            <column name="author" value="Anna Petrov"/>
+            <column name="description" value="Common design patterns and best practices in React development"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-02-10T16:20:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="5"/>
+            <column name="file_name" value="microservices-architecture.pdf"/>
+            <column name="file_url" value="https://example.com/files/microservices-architecture.pdf"/>
+            <column name="title" value="Microservices Architecture"/>
+            <column name="author" value="David Wilson"/>
+            <column name="description" value="Building scalable microservices architecture with Spring Cloud"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-02-15T11:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="6"/>
+            <column name="file_name" value="security-best-practices.docx"/>
+            <column name="file_url" value="https://example.com/files/security-best-practices.docx"/>
+            <column name="title" value="Web Security Best Practices"/>
+            <column name="author" value="Elena Kozlov"/>
+            <column name="description" value="Essential security practices for web application development"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-02-20T13:45:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="7"/>
+            <column name="file_name" value="docker-containerization.pdf"/>
+            <column name="file_url" value="https://example.com/files/docker-containerization.pdf"/>
+            <column name="title" value="Docker Containerization Guide"/>
+            <column name="author" value="Michael Brown"/>
+            <column name="description" value="Complete guide to Docker containerization and orchestration"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-03-01T08:15:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="8"/>
+            <column name="file_name" value="api-design-standards.pdf"/>
+            <column name="file_url" value="https://example.com/files/api-design-standards.pdf"/>
+            <column name="title" value="REST API Design Standards"/>
+            <column name="author" value="Sophie Martin"/>
+            <column name="description" value="Industry standards and best practices for REST API design"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-03-05T15:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="9"/>
+            <column name="file_name" value="testing-strategies.docx"/>
+            <column name="file_url" value="https://example.com/files/testing-strategies.docx"/>
+            <column name="title" value="Software Testing Strategies"/>
+            <column name="author" value="Robert Taylor"/>
+            <column name="description" value="Comprehensive testing strategies for modern software development"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-03-10T12:00:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="1"/>
+            <column name="file_name" value="spring-security-guide.pdf"/>
+            <column name="file_url" value="https://example.com/files/spring-security-guide.pdf"/>
+            <column name="title" value="Spring Security Implementation"/>
+            <column name="author" value="John Smith"/>
+            <column name="description" value="Step-by-step guide to implementing Spring Security in applications"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-03-15T14:45:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="2"/>
+            <column name="file_name" value="vue-js-fundamentals.pdf"/>
+            <column name="file_url" value="https://example.com/files/vue-js-fundamentals.pdf"/>
+            <column name="title" value="Vue.js Fundamentals"/>
+            <column name="author" value="Maria Garcia"/>
+            <column name="description" value="Learning Vue.js from basics to advanced concepts"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-03-20T10:20:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="3"/>
+            <column name="file_name" value="postgresql-optimization.docx"/>
+            <column name="file_url" value="https://example.com/files/postgresql-optimization.docx"/>
+            <column name="title" value="PostgreSQL Performance Optimization"/>
+            <column name="author" value="Alex Smith"/>
+            <column name="description" value="Techniques for optimizing PostgreSQL database performance"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-03-25T16:10:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="4"/>
+            <column name="file_name" value="typescript-handbook.pdf"/>
+            <column name="file_url" value="https://example.com/files/typescript-handbook.pdf"/>
+            <column name="title" value="TypeScript Developer Handbook"/>
+            <column name="author" value="Anna Petrov"/>
+            <column name="description" value="Complete TypeScript reference for developers"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-04-01T09:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="5"/>
+            <column name="file_name" value="kubernetes-deployment.pdf"/>
+            <column name="file_url" value="https://example.com/files/kubernetes-deployment.pdf"/>
+            <column name="title" value="Kubernetes Deployment Guide"/>
+            <column name="author" value="David Wilson"/>
+            <column name="description" value="Deploying applications on Kubernetes platform"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-04-05T11:45:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="6"/>
+            <column name="file_name" value="redis-caching-strategies.pdf"/>
+            <column name="file_url" value="https://example.com/files/redis-caching-strategies.pdf"/>
+            <column name="title" value="Redis Caching Strategies"/>
+            <column name="author" value="Elena Kozlov"/>
+            <column name="description" value="Implementing effective caching with Redis"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-04-10T13:20:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="7"/>
+            <column name="file_name" value="graphql-api-design.pdf"/>
+            <column name="file_url" value="https://example.com/files/graphql-api-design.pdf"/>
+            <column name="title" value="GraphQL API Design"/>
+            <column name="author" value="Michael Brown"/>
+            <column name="description" value="Designing efficient GraphQL APIs"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-04-15T15:00:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="8"/>
+            <column name="file_name" value="aws-cloud-architecture.docx"/>
+            <column name="file_url" value="https://example.com/files/aws-cloud-architecture.docx"/>
+            <column name="title" value="AWS Cloud Architecture"/>
+            <column name="author" value="Sophie Martin"/>
+            <column name="description" value="Building scalable applications on AWS"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-04-20T12:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="9"/>
+            <column name="file_name" value="ci-cd-pipeline.pdf"/>
+            <column name="file_url" value="https://example.com/files/ci-cd-pipeline.pdf"/>
+            <column name="title" value="CI/CD Pipeline Implementation"/>
+            <column name="author" value="Robert Taylor"/>
+            <column name="description" value="Setting up continuous integration and deployment"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-04-25T14:15:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="1"/>
+            <column name="file_name" value="elasticsearch-search.pdf"/>
+            <column name="file_url" value="https://example.com/files/elasticsearch-search.pdf"/>
+            <column name="title" value="Elasticsearch Search Implementation"/>
+            <column name="author" value="John Smith"/>
+            <column name="description" value="Implementing full-text search with Elasticsearch"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-05-01T10:00:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="2"/>
+            <column name="file_name" value="angular-performance.pdf"/>
+            <column name="file_url" value="https://example.com/files/angular-performance.pdf"/>
+            <column name="title" value="Angular Performance Optimization"/>
+            <column name="author" value="Maria Garcia"/>
+            <column name="description" value="Optimizing Angular applications for better performance"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-05-05T16:45:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="3"/>
+            <column name="file_name" value="mongodb-aggregation.docx"/>
+            <column name="file_url" value="https://example.com/files/mongodb-aggregation.docx"/>
+            <column name="title" value="MongoDB Aggregation Framework"/>
+            <column name="author" value="Alex Smith"/>
+            <column name="description" value="Advanced data processing with MongoDB aggregation"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-05-10T08:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="4"/>
+            <column name="file_name" value="nodejs-best-practices.pdf"/>
+            <column name="file_url" value="https://example.com/files/nodejs-best-practices.pdf"/>
+            <column name="title" value="Node.js Best Practices"/>
+            <column name="author" value="Anna Petrov"/>
+            <column name="description" value="Best practices for Node.js development"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-05-15T11:20:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="5"/>
+            <column name="file_name" value="terraform-infrastructure.pdf"/>
+            <column name="file_url" value="https://example.com/files/terraform-infrastructure.pdf"/>
+            <column name="title" value="Terraform Infrastructure as Code"/>
+            <column name="author" value="David Wilson"/>
+            <column name="description" value="Managing infrastructure with Terraform"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-05-20T13:10:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="6"/>
+            <column name="file_name" value="prometheus-monitoring.pdf"/>
+            <column name="file_url" value="https://example.com/files/prometheus-monitoring.pdf"/>
+            <column name="title" value="Prometheus Monitoring Setup"/>
+            <column name="author" value="Elena Kozlov"/>
+            <column name="description" value="Setting up monitoring with Prometheus and Grafana"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-05-25T15:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="7"/>
+            <column name="file_name" value="nginx-configuration.docx"/>
+            <column name="file_url" value="https://example.com/files/nginx-configuration.docx"/>
+            <column name="title" value="Nginx Configuration Guide"/>
+            <column name="author" value="Michael Brown"/>
+            <column name="description" value="Advanced Nginx configuration for web applications"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-06-01T09:15:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="8"/>
+            <column name="file_name" value="jwt-authentication.pdf"/>
+            <column name="file_url" value="https://example.com/files/jwt-authentication.pdf"/>
+            <column name="title" value="JWT Authentication Implementation"/>
+            <column name="author" value="Sophie Martin"/>
+            <column name="description" value="Implementing secure JWT authentication"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-06-05T12:45:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="9"/>
+            <column name="file_name" value="oauth2-authorization.pdf"/>
+            <column name="file_url" value="https://example.com/files/oauth2-authorization.pdf"/>
+            <column name="title" value="OAuth2 Authorization Server"/>
+            <column name="author" value="Robert Taylor"/>
+            <column name="description" value="Building OAuth2 authorization server with Spring Security"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-06-10T14:20:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="1"/>
+            <column name="file_name" value="spring-data-jpa.pdf"/>
+            <column name="file_url" value="https://example.com/files/spring-data-jpa.pdf"/>
+            <column name="title" value="Spring Data JPA Advanced"/>
+            <column name="author" value="John Smith"/>
+            <column name="description" value="Advanced Spring Data JPA features and custom queries"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-06-15T10:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="2"/>
+            <column name="file_name" value="webpack-optimization.pdf"/>
+            <column name="file_url" value="https://example.com/files/webpack-optimization.pdf"/>
+            <column name="title" value="Webpack Bundle Optimization"/>
+            <column name="author" value="Maria Garcia"/>
+            <column name="description" value="Optimizing webpack bundles for production"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-06-20T16:00:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="3"/>
+            <column name="file_name" value="rabbitmq-messaging.docx"/>
+            <column name="file_url" value="https://example.com/files/rabbitmq-messaging.docx"/>
+            <column name="title" value="RabbitMQ Message Queues"/>
+            <column name="author" value="Alex Smith"/>
+            <column name="description" value="Implementing message queues with RabbitMQ"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-06-25T11:15:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="4"/>
+            <column name="file_name" value="jest-testing.pdf"/>
+            <column name="file_url" value="https://example.com/files/jest-testing.pdf"/>
+            <column name="title" value="Jest Testing Framework"/>
+            <column name="author" value="Anna Petrov"/>
+            <column name="description" value="Comprehensive testing with Jest framework"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-07-01T13:40:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="5"/>
+            <column name="file_name" value="helm-kubernetes.pdf"/>
+            <column name="file_url" value="https://example.com/files/helm-kubernetes.pdf"/>
+            <column name="title" value="Helm Kubernetes Package Manager"/>
+            <column name="author" value="David Wilson"/>
+            <column name="description" value="Managing Kubernetes applications with Helm"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-07-05T15:25:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="6"/>
+            <column name="file_name" value="git-workflow-strategies.pdf"/>
+            <column name="file_url" value="https://example.com/files/git-workflow-strategies.pdf"/>
+            <column name="title" value="Git Workflow Strategies"/>
+            <column name="author" value="Elena Kozlov"/>
+            <column name="description" value="Effective Git workflows for team development"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-07-10T09:50:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="7"/>
+            <column name="file_name" value="swagger-api-documentation.pdf"/>
+            <column name="file_url" value="https://example.com/files/swagger-api-documentation.pdf"/>
+            <column name="title" value="Swagger API Documentation"/>
+            <column name="author" value="Michael Brown"/>
+            <column name="description" value="Creating comprehensive API documentation with Swagger"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-07-15T12:35:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="8"/>
+            <column name="file_name" value="jenkins-pipeline.docx"/>
+            <column name="file_url" value="https://example.com/files/jenkins-pipeline.docx"/>
+            <column name="title" value="Jenkins Pipeline Automation"/>
+            <column name="author" value="Sophie Martin"/>
+            <column name="description" value="Automating CI/CD with Jenkins pipelines"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-07-20T14:10:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="9"/>
+            <column name="file_name" value="sonarqube-code-quality.pdf"/>
+            <column name="file_url" value="https://example.com/files/sonarqube-code-quality.pdf"/>
+            <column name="title" value="SonarQube Code Quality"/>
+            <column name="author" value="Robert Taylor"/>
+            <column name="description" value="Maintaining code quality with SonarQube"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-07-25T11:20:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="1"/>
+            <column name="file_name" value="spring-cloud-gateway.pdf"/>
+            <column name="file_url" value="https://example.com/files/spring-cloud-gateway.pdf"/>
+            <column name="title" value="Spring Cloud Gateway"/>
+            <column name="author" value="John Smith"/>
+            <column name="description" value="Building API gateways with Spring Cloud Gateway"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-08-01T16:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="2"/>
+            <column name="file_name" value="sass-css-preprocessing.pdf"/>
+            <column name="file_url" value="https://example.com/files/sass-css-preprocessing.pdf"/>
+            <column name="title" value="SASS CSS Preprocessing"/>
+            <column name="author" value="Maria Garcia"/>
+            <column name="description" value="Advanced CSS with SASS preprocessor"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-08-05T08:45:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="3"/>
+            <column name="file_name" value="apache-kafka-streams.docx"/>
+            <column name="file_url" value="https://example.com/files/apache-kafka-streams.docx"/>
+            <column name="title" value="Apache Kafka Streams"/>
+            <column name="author" value="Alex Smith"/>
+            <column name="description" value="Real-time data processing with Kafka Streams"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-08-10T13:15:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="4"/>
+            <column name="file_name" value="cypress-e2e-testing.pdf"/>
+            <column name="file_url" value="https://example.com/files/cypress-e2e-testing.pdf"/>
+            <column name="title" value="Cypress E2E Testing"/>
+            <column name="author" value="Anna Petrov"/>
+            <column name="description" value="End-to-end testing with Cypress framework"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-08-15T10:25:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="5"/>
+            <column name="file_name" value="ansible-automation.pdf"/>
+            <column name="file_url" value="https://example.com/files/ansible-automation.pdf"/>
+            <column name="title" value="Ansible Infrastructure Automation"/>
+            <column name="author" value="David Wilson"/>
+            <column name="description" value="Automating infrastructure with Ansible"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-08-20T15:40:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="6"/>
+            <column name="file_name" value="logstash-log-processing.pdf"/>
+            <column name="file_url" value="https://example.com/files/logstash-log-processing.pdf"/>
+            <column name="title" value="Logstash Log Processing"/>
+            <column name="author" value="Elena Kozlov"/>
+            <column name="description" value="Processing logs with Logstash and ELK stack"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-08-25T12:50:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="7"/>
+            <column name="file_name" value="hibernate-performance.docx"/>
+            <column name="file_url" value="https://example.com/files/hibernate-performance.docx"/>
+            <column name="title" value="Hibernate Performance Tuning"/>
+            <column name="author" value="Michael Brown"/>
+            <column name="description" value="Optimizing Hibernate ORM performance"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-09-01T14:05:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="8"/>
+            <column name="file_name" value="webpack-module-federation.pdf"/>
+            <column name="file_url" value="https://example.com/files/webpack-module-federation.pdf"/>
+            <column name="title" value="Webpack Module Federation"/>
+            <column name="author" value="Sophie Martin"/>
+            <column name="description" value="Micro-frontends with Webpack Module Federation"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-09-05T11:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="9"/>
+            <column name="file_name" value="apache-spark-bigdata.pdf"/>
+            <column name="file_url" value="https://example.com/files/apache-spark-bigdata.pdf"/>
+            <column name="title" value="Apache Spark Big Data Processing"/>
+            <column name="author" value="Robert Taylor"/>
+            <column name="description" value="Processing big data with Apache Spark"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-09-10T16:20:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="1"/>
+            <column name="file_name" value="spring-boot-actuator.pdf"/>
+            <column name="file_url" value="https://example.com/files/spring-boot-actuator.pdf"/>
+            <column name="title" value="Spring Boot Actuator Monitoring"/>
+            <column name="author" value="John Smith"/>
+            <column name="description" value="Application monitoring with Spring Boot Actuator"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-09-15T09:15:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="2"/>
+            <column name="file_name" value="storybook-component-testing.pdf"/>
+            <column name="file_url" value="https://example.com/files/storybook-component-testing.pdf"/>
+            <column name="title" value="Storybook Component Testing"/>
+            <column name="author" value="Maria Garcia"/>
+            <column name="description" value="Component development and testing with Storybook"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-09-20T13:25:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="3"/>
+            <column name="file_name" value="cassandra-nosql.docx"/>
+            <column name="file_url" value="https://example.com/files/cassandra-nosql.docx"/>
+            <column name="title" value="Apache Cassandra NoSQL Database"/>
+            <column name="author" value="Alex Smith"/>
+            <column name="description" value="Working with Cassandra NoSQL database"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-09-25T15:10:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="4"/>
+            <column name="file_name" value="playwright-testing.pdf"/>
+            <column name="file_url" value="https://example.com/files/playwright-testing.pdf"/>
+            <column name="title" value="Playwright Cross-Browser Testing"/>
+            <column name="author" value="Anna Petrov"/>
+            <column name="description" value="Cross-browser testing with Playwright"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-10-01T12:40:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="5"/>
+            <column name="file_name" value="vault-secrets-management.pdf"/>
+            <column name="file_url" value="https://example.com/files/vault-secrets-management.pdf"/>
+            <column name="title" value="HashiCorp Vault Secrets Management"/>
+            <column name="author" value="David Wilson"/>
+            <column name="description" value="Managing secrets with HashiCorp Vault"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-10-05T14:55:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="6"/>
+            <column name="file_name" value="kibana-data-visualization.pdf"/>
+            <column name="file_url" value="https://example.com/files/kibana-data-visualization.pdf"/>
+            <column name="title" value="Kibana Data Visualization"/>
+            <column name="author" value="Elena Kozlov"/>
+            <column name="description" value="Creating dashboards with Kibana"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-10-10T11:20:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="7"/>
+            <column name="file_name" value="mybatis-orm-mapping.docx"/>
+            <column name="file_url" value="https://example.com/files/mybatis-orm-mapping.docx"/>
+            <column name="title" value="MyBatis ORM Mapping"/>
+            <column name="author" value="Michael Brown"/>
+            <column name="description" value="Advanced MyBatis ORM mapping techniques"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-10-15T16:35:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="8"/>
+            <column name="file_name" value="rollup-bundling.pdf"/>
+            <column name="file_url" value="https://example.com/files/rollup-bundling.pdf"/>
+            <column name="title" value="Rollup JavaScript Bundling"/>
+            <column name="author" value="Sophie Martin"/>
+            <column name="description" value="Efficient JavaScript bundling with Rollup"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-10-20T08:45:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="9"/>
+            <column name="file_name" value="flink-stream-processing.pdf"/>
+            <column name="file_url" value="https://example.com/files/flink-stream-processing.pdf"/>
+            <column name="title" value="Apache Flink Stream Processing"/>
+            <column name="author" value="Robert Taylor"/>
+            <column name="description" value="Real-time stream processing with Apache Flink"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-10-25T13:50:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="1"/>
+            <column name="file_name" value="spring-cloud-config.pdf"/>
+            <column name="file_url" value="https://example.com/files/spring-cloud-config.pdf"/>
+            <column name="title" value="Spring Cloud Config Server"/>
+            <column name="author" value="John Smith"/>
+            <column name="description" value="Centralized configuration with Spring Cloud Config"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-10-30T10:15:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="2"/>
+            <column name="file_name" value="styled-components-css.pdf"/>
+            <column name="file_url" value="https://example.com/files/styled-components-css.pdf"/>
+            <column name="title" value="Styled Components CSS-in-JS"/>
+            <column name="author" value="Maria Garcia"/>
+            <column name="description" value="CSS-in-JS with Styled Components"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-11-01T15:30:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="3"/>
+            <column name="file_name" value="neo4j-graph-database.docx"/>
+            <column name="file_url" value="https://example.com/files/neo4j-graph-database.docx"/>
+            <column name="title" value="Neo4j Graph Database"/>
+            <column name="author" value="Alex Smith"/>
+            <column name="description" value="Working with Neo4j graph database"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-11-05T12:10:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="4"/>
+            <column name="file_name" value="testing-library-react.pdf"/>
+            <column name="file_url" value="https://example.com/files/testing-library-react.pdf"/>
+            <column name="title" value="React Testing Library"/>
+            <column name="author" value="Anna Petrov"/>
+            <column name="description" value="Testing React components with Testing Library"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-11-10T14:25:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="5"/>
+            <column name="file_name" value="consul-service-discovery.pdf"/>
+            <column name="file_url" value="https://example.com/files/consul-service-discovery.pdf"/>
+            <column name="title" value="HashiCorp Consul Service Discovery"/>
+            <column name="author" value="David Wilson"/>
+            <column name="description" value="Service discovery and configuration with Consul"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-11-15T09:40:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="6"/>
+            <column name="file_name" value="elasticsearch-cluster.pdf"/>
+            <column name="file_url" value="https://example.com/files/elasticsearch-cluster.pdf"/>
+            <column name="title" value="Elasticsearch Cluster Management"/>
+            <column name="author" value="Elena Kozlov"/>
+            <column name="description" value="Managing Elasticsearch clusters for production"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-11-20T16:05:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="7"/>
+            <column name="file_name" value="jpa-criteria-api.docx"/>
+            <column name="file_url" value="https://example.com/files/jpa-criteria-api.docx"/>
+            <column name="title" value="JPA Criteria API"/>
+            <column name="author" value="Michael Brown"/>
+            <column name="description" value="Dynamic queries with JPA Criteria API"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-11-25T11:50:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="8"/>
+            <column name="file_name" value="parcel-bundler.pdf"/>
+            <column name="file_url" value="https://example.com/files/parcel-bundler.pdf"/>
+            <column name="title" value="Parcel Zero-Config Bundler"/>
+            <column name="author" value="Sophie Martin"/>
+            <column name="description" value="Zero-configuration bundling with Parcel"/>
+            <column name="is_public" value="true"/>
+            <column name="created_at" value="2024-11-30T13:15:00Z"/>
+        </insert>
+
+        <insert tableName="documents">
+            <column name="user_id" value="9"/>
+            <column name="file_name" value="storm-stream-processing.pdf"/>
+            <column name="file_url" value="https://example.com/files/storm-stream-processing.pdf"/>
+            <column name="title" value="Apache Storm Stream Processing"/>
+            <column name="author" value="Robert Taylor"/>
+            <column name="description" value="Real-time processing with Apache Storm"/>
+            <column name="is_public" value="false"/>
+            <column name="created_at" value="2024-12-01T15:20:00Z"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

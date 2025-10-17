@@ -1,47 +1,67 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="theme-light">
 <head>
     <meta charset="UTF-8">
-    <title>eLibrary — онлайн библиотека</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <style>
-
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="landing.title">eLibrary — онлайн библиотека</title>
+    <link rel="stylesheet" href="/css/unified.css">
 </head>
 <body>
-<header>
-    <h2>eLibrary</h2>
-    <nav>
-        <a href="landing.html">Главная</a>
-        <a href="info.html">О библиотеке</a>
-        <a href="/docs/login">Войти</a>
-        <a href="/library">Каталог</a>
-    </nav>
-</header>
+    <header>
+        <h1 data-i18n="nav.home">eLibrary</h1>
+        <nav>
+            <a href="landing.html" class="nav-link" data-i18n="nav.home">Главная</a>
+            <a href="info.html" class="nav-link" data-i18n="nav.about">О библиотеке</a>
+            <a href="/docs/login" class="nav-link" data-i18n="nav.login">Войти</a>
+            <a href="/library" class="nav-link" data-i18n="nav.library">Каталог</a>
+            
+            <!-- Theme and Language Switchers -->
+            <div class="theme-switcher">
+                <select id="themeSelect">
+                    <option value="light" data-i18n="theme.light">Светлая</option>
+                    <option value="dark" data-i18n="theme.dark">Темная</option>
+                    <option value="colorblind" data-i18n="theme.colorblind">Для людей с цветовой слепотой</option>
+                </select>
+            </div>
+            
+            <div class="language-switcher">
+                <select id="languageSelect">
+                    <option value="ru" data-i18n="language.ru">Русский</option>
+                    <option value="en" data-i18n="language.en">English</option>
+                </select>
+            </div>
+        </nav>
+    </header>
 
-<section class="hero">
-    <h1>Онлайн библиотека книг и документов</h1>
-    <p>Ищите, читайте и скачивайте материалы из публичного каталога</p>
-    <a href="/library" class="cta-button">Открыть каталог</a>
-</section>
+    <main>
+        <section class="hero">
+            <h1 data-i18n="landing.heroTitle">Онлайн библиотека книг и документов</h1>
+            <p data-i18n="landing.heroSubtitle">Ищите, читайте и скачивайте материалы из публичного каталога</p>
+            <a href="/library" class="cta-button" data-i18n="landing.openCatalog">Открыть каталог</a>
+        </section>
 
-<section class="features">
-    <div class="feature">
-        <h3>Публичный каталог</h3>
-        <p>Сотни материалов, доступных без регистрации.</p>
-    </div>
-    <div class="feature">
-        <h3>Поиск</h3>
-        <p>Быстрый поиск по названию и автору.</p>
-    </div>
-    <div class="feature">
-        <h3>Загрузка файлов</h3>
-        <p>Пополняйте библиотеку собственными материалами.</p>
-    </div>
-</section>
+        <section class="features">
+            <div class="feature">
+                <h3 data-i18n="landing.feature1Title">Публичный каталог</h3>
+                <p data-i18n="landing.feature1Desc">Сотни материалов, доступных без регистрации.</p>
+            </div>
+            <div class="feature">
+                <h3 data-i18n="landing.feature2Title">Поиск</h3>
+                <p data-i18n="landing.feature2Desc">Быстрый поиск по названию и автору.</p>
+            </div>
+            <div class="feature">
+                <h3 data-i18n="landing.feature3Title">Загрузка файлов</h3>
+                <p data-i18n="landing.feature3Desc">Пополняйте библиотеку собственными материалами.</p>
+            </div>
+        </section>
+    </main>
 
-<footer>
-    <p>© 2025 eLibrary. Все права защищены.</p>
-</footer>
+    <footer>
+        <p data-i18n="landing.copyright">© 2025 eLibrary. Все права защищены.</p>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="/js/theme.js"></script>
+    <script src="/js/i18n.js"></script>
 </body>
 </html>

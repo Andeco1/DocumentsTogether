@@ -1,26 +1,66 @@
 <!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" th:class="${themeClass ?: 'theme-light'}">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${doc.title} ?: ${doc.file_name}">Документ</title>
-    <link rel="stylesheet" th:href="@{/css/main.css}">
-    <link rel="stylesheet" th:href="@{/css/documents.css}">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/css/variables.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/components.css}">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
+    <link rel="stylesheet" th:href="@{/css/themes.css}">
 </head>
 <body>
-<header>
-    <a href="/library">← Ко всем материалам</a>
-    <h2 th:text="${doc.title} ?: ${doc.file_name}">Название</h2>
-</header>
+    <!-- Header -->
+    <header>
+        <h1 data-i18n="nav.home">DocuShare</h1>
+        <nav>
+            <a href="/library" class="nav-link" data-i18n="nav.library">← Ко всем материалам</a>
+            <a href="/" class="nav-link" data-i18n="nav.home">Главная</a>
+        </nav>
+    </header>
 
-<main>
-    <p><strong>Автор:</strong> <span th:text="${doc.author}">Автор</span></p>
-    <p th:text="${doc.description}">Описание</p>
-    <p class="muted" th:text="${#dates.format(doc.createdAt, 'dd.MM.yyyy HH:mm')}">Дата</p>
-    <div>
-        <a th:if="${doc.file_url}" th:href="${doc.file_url}" target="_blank">Скачать файл</a>
-    </div>
-</main>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1 th:text="${doc.title} ?: ${doc.file_name}">Название</h1>
+                </div>
+                <div class="card-body">
+                    <div class="mb-lg">
+                        <strong data-i18n="library.documentAuthor">Автор:</strong> 
+                        <span th:text="${doc.author}">Автор</span>
+                    </div>
+                    
+                    <div class="mb-lg">
+                        <strong data-i18n="library.documentDescription">Описание:</strong>
+                        <p th:text="${doc.description}">Описание</p>
+                    </div>
+                    
+                    <div class="mb-lg text-muted">
+                        <span th:text="${#dates.format(doc.createdAt, 'dd.MM.yyyy HH:mm')}">Дата</span>
+                    </div>
+                    
+                    <div th:if="${doc.file_url}">
+                        <a th:href="${doc.file_url}" target="_blank" class="btn btn-primary" data-i18n="library.documentDownload">Скачать файл</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
+    <!-- Footer -->
+    <footer>
+        <p data-i18n="landing.copyright">© 2025 eLibrary. Все права защищены.</p>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/theme.js}"></script>
+    <script th:src="@{/js/i18n.js}"></script>
 </body>
 </html>
 

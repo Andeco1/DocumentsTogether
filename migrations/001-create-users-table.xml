@@ -17,18 +17,9 @@
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
-        </createTable>
-        <createTable tableName="document">
-            <column name="user_id" type="BIGSERIAL">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
             </column>
-            <column name="username" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="email" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
     </changeSet>
 

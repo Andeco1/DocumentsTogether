@@ -8,6 +8,7 @@ import java.util.List;
 
 
 public interface DocumentRepository extends JpaRepository<Document, Long> {
+    List<Document> findByIsPublicTrue();
     List<Document> findByLibUser(LibUser libUser);
     List<Document> findByIsPublicTrueOrderByCreatedAtDesc();
     List<Document> findByIsPublicTrueAndTitleContainingIgnoreCaseOrIsPublicTrueAndAuthorContainingIgnoreCase(String title, String author);
